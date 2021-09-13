@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from 'react';
-
-interface BarberDto {
-  id: number;
-  name: string;
-  description: string;
-}
+import { BarberDto, getBarbers } from '../api';
 
 export default function BarbersTable() {
   const [barbers, setBarbers] = useState<BarberDto[] | null>(null);
 
   useEffect(() => {
     const fetchBarbers = async () => {
-      const response = await fetch('http://localhost:3000/barbers');
-      const content = (await response.json()) as BarberDto[];
-      setBarbers(content);
+      const barbersResponse = await getBarbers();
+      setBarbers(barbersResponse);
     };
     fetchBarbers();
   }, []);
