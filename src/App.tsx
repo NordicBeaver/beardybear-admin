@@ -1,7 +1,7 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import styled from 'styled-components/macro';
-import BarbersTable from './components/BarbersTable';
+import BarbersPage from './components/BarbersPage';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 
@@ -41,7 +41,7 @@ function App() {
           <Sidebar></Sidebar>
         </SidebarContainer>
         <ContentContainer>
-          <BarbersTable></BarbersTable>
+          <BarbersPage></BarbersPage>
         </ContentContainer>
       </AppStyled>
     </QueryClientProvider>
