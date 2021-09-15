@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const host = 'http://localhost:3000';
 
 export interface BarberDto {
@@ -7,7 +9,18 @@ export interface BarberDto {
 }
 
 export async function getBarbers() {
-  const response = await fetch(`${host}/barbers`);
-  const content = (await response.json()) as BarberDto[];
-  return content;
+  const response = await axios.get<BarberDto[]>(`${host}/barbers`);
+  const data = response.data;
+  return data;
+}
+
+export interface CreateBarberDto {
+  name: string;
+  description: string;
+}
+
+export async function createBarber(dto: CreateBarberDto) {
+  const response = await axios.post<BarberDto>(`${host}/barbers`, dto);
+  const data = response.data;
+  return data;
 }
