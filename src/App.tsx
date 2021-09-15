@@ -1,4 +1,5 @@
 import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import styled from 'styled-components/macro';
 import BarbersTable from './components/BarbersTable';
 import Header from './components/Header';
@@ -27,19 +28,23 @@ const ContentContainer = styled.div`
   padding: 2em;
 `;
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <AppStyled>
-      <HeaderContainer>
-        <Header></Header>
-      </HeaderContainer>
-      <SidebarContainer>
-        <Sidebar></Sidebar>
-      </SidebarContainer>
-      <ContentContainer>
-        <BarbersTable></BarbersTable>
-      </ContentContainer>
-    </AppStyled>
+    <QueryClientProvider client={queryClient}>
+      <AppStyled>
+        <HeaderContainer>
+          <Header></Header>
+        </HeaderContainer>
+        <SidebarContainer>
+          <Sidebar></Sidebar>
+        </SidebarContainer>
+        <ContentContainer>
+          <BarbersTable></BarbersTable>
+        </ContentContainer>
+      </AppStyled>
+    </QueryClientProvider>
   );
 }
 

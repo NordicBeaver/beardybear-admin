@@ -1,22 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { BarberDto, getBarbers } from '../api';
+import React from 'react';
+import { useGetBarbersQuery } from '../queries';
 
 export default function BarbersTable() {
-  const [barbers, setBarbers] = useState<BarberDto[] | null>(null);
-
-  useEffect(() => {
-    const fetchBarbers = async () => {
-      const barbersResponse = await getBarbers();
-      setBarbers(barbersResponse);
-    };
-    fetchBarbers();
-  }, []);
+  const barbersQuery = useGetBarbersQuery();
 
   return (
-    <div>
-      {barbers?.map((barber) => (
-        <div>{barber.name}</div>
-      ))}
-    </div>
+    <div>{barbersQuery.status === 'success' ? barbersQuery.data.map((barber) => <div>{barber.name}</div>) : null}</div>
   );
 }
