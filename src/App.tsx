@@ -4,6 +4,8 @@ import styled from 'styled-components/macro';
 import BarbersPage from './components/BarbersPage';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import BarberServicesPage from './components/BarberServicesPage';
 
 const AppStyled = styled.div`
   height: 100%;
@@ -33,17 +35,26 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AppStyled>
-        <HeaderContainer>
-          <Header></Header>
-        </HeaderContainer>
-        <SidebarContainer>
-          <Sidebar></Sidebar>
-        </SidebarContainer>
-        <ContentContainer>
-          <BarbersPage></BarbersPage>
-        </ContentContainer>
-      </AppStyled>
+      <Router>
+        <AppStyled>
+          <HeaderContainer>
+            <Header></Header>
+          </HeaderContainer>
+          <SidebarContainer>
+            <Sidebar></Sidebar>
+          </SidebarContainer>
+          <ContentContainer>
+            <Switch>
+              <Route path="/barbers">
+                <BarbersPage></BarbersPage>
+              </Route>
+              <Route path="/services">
+                <BarberServicesPage></BarberServicesPage>
+              </Route>
+            </Switch>
+          </ContentContainer>
+        </AppStyled>
+      </Router>
     </QueryClientProvider>
   );
 }

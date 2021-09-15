@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 const SidebarItem = styled.li`
@@ -10,8 +11,12 @@ const SidebarItem = styled.li`
 export default function Sidebar() {
   return (
     <ul>
-      <SidebarItem>Barbers</SidebarItem>
-      <SidebarItem>Services</SidebarItem>
+      <SidebarItem>
+        <Link to="/barbers">Barbers</Link>
+      </SidebarItem>
+      <SidebarItem>
+        <Link to="/services">Services</Link>
+      </SidebarItem>
     </ul>
   );
 }
