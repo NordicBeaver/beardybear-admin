@@ -1,31 +1,40 @@
-import React, { useState } from 'react';
+import { Field, Form, Formik } from 'formik';
+import React from 'react';
 import { useCreateBarberMutation } from '../queries';
 
+interface NewBarberFormValues {
+  name: string;
+  description: string;
+}
+
 export default function NewBarberForm() {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const initialValues: NewBarberFormValues = {
+    name: '',
+    description: '',
+  };
 
   const createBarberMutation = useCreateBarberMutation();
 
-  const handleSubmit: React.FormEventHandler = (e) => {
-    e.preventDefault();
+  const handleSubmit = (values: NewBarberFormValues) => {
     createBarberMutation.mutate({
-      name: name,
-      description: description,
+      name: values.name,
+      description: values.description,
     });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Name</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)}></input>
-      </div>
-      <div>
-        <label>Description</label>
-        <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}></input>
-      </div>
-      <input type="submit" value="New Barber"></input>
-    </form>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Form>
+        <div>
+          <label htmlFor="name">Name</label>
+          <Field name="name" type="text"></Field>
+        </div>
+        <div>
+          <label htmlFor="description">Description</label>
+          <Field name="description" type="text"></Field>
+        </div>
+        <input type="submit" value="New Barber"></input>
+      </Form>
+    </Formik>
   );
 }
