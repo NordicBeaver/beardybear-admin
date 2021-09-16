@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { useGetBarbersQuery } from '../queries';
 
@@ -31,7 +32,9 @@ export default function BarbersTable() {
       <tbody>
         {barbersQuery.data.map((barber) => (
           <tr>
-            <td>{barber.name}</td>
+            <td>
+              <Link to={`/barbers/${barber.id}`}>{barber.name}</Link>
+            </td>
             <td>{barber.description}</td>
           </tr>
         ))}
