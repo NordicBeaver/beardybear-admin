@@ -14,6 +14,12 @@ export async function getBarbers() {
   return data;
 }
 
+export async function getBarber(id: number) {
+  const response = await axios.get<BarberDto>(`${host}/barbers/${id}`);
+  const data = response.data;
+  return data;
+}
+
 export interface CreateBarberDto {
   name: string;
   description: string;
