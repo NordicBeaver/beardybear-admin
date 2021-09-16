@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import BarberServicesPage from './components/BarberServicesPage';
+import NewBarberPage from './components/NewBarberPage';
 
 const AppStyled = styled.div`
   height: 100%;
@@ -45,6 +46,9 @@ function App() {
           </SidebarContainer>
           <ContentContainer>
             <Switch>
+              <Route path="/barbers/new">
+                <NewBarberPage></NewBarberPage>
+              </Route>
               <Route path="/barbers">
                 <BarbersPage></BarbersPage>
               </Route>

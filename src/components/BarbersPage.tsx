@@ -1,7 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import BarbersTable from './BarbersTable';
-import NewBarberForm from './NewBarberForm';
+
+const PageHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
+`;
 
 const PageHeading = styled.h2`
   font-weight: 500;
@@ -12,8 +20,10 @@ const PageHeading = styled.h2`
 export default function BarbersPage() {
   return (
     <div>
-      <PageHeading>Barbers</PageHeading>
-      <NewBarberForm></NewBarberForm>
+      <PageHeader>
+        <PageHeading>Barbers</PageHeading>
+        <Link to="barbers/new">New Barber</Link>
+      </PageHeader>
       <BarbersTable></BarbersTable>
     </div>
   );
