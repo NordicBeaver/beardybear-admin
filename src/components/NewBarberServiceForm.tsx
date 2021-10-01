@@ -1,5 +1,6 @@
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
+import { useCreateBarberServiceMutation } from '../queries';
 
 interface NewBarberServiceFormValues {
   name: string;
@@ -14,7 +15,15 @@ export default function NewBarberServiceForm() {
     description: '',
   };
 
-  const handleSubmit = (values: NewBarberServiceFormValues) => {};
+  const createBarberServiceMutation = useCreateBarberServiceMutation();
+
+  const handleSubmit = (values: NewBarberServiceFormValues) => {
+    createBarberServiceMutation.mutate({
+      name: values.name,
+      price: values.price,
+      description: values.description,
+    });
+  };
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
