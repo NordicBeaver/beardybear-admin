@@ -9,6 +9,7 @@ import BarberServicesPage from './components/BarberServicesPage';
 import NewBarberPage from './components/NewBarberPage';
 import BarberPage from './components/BarberPage';
 import NewBarberServicePage from './components/NewBarberServicePage';
+import BarberServicePage from './components/BarberServicePage';
 
 const AppStyled = styled.div`
   height: 100%;
@@ -59,6 +60,9 @@ function App() {
               </Route>
               <Route path="/services/new">
                 <NewBarberServicePage></NewBarberServicePage>
+              </Route>
+              <Route path="/services/:id">
+                <BarberServicePage></BarberServicePage>
               </Route>
               <Route path="/services">
                 <BarberServicesPage></BarberServicesPage>
