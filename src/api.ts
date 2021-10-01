@@ -30,3 +30,15 @@ export async function createBarber(dto: CreateBarberDto) {
   const data = response.data;
   return data;
 }
+
+export interface UpdateBarberDto {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export async function updateBarber(dto: UpdateBarberDto) {
+  const response = await axios.post<BarberDto>(`${host}/barbers/update`, dto);
+  const data = response.data;
+  return data;
+}

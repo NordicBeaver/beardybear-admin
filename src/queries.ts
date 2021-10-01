@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { createBarber, getBarber, getBarbers } from './api';
+import { createBarber, getBarber, getBarbers, updateBarber } from './api';
 
 export function useGetBarbersQuery() {
   const query = useQuery('barbers', getBarbers);
@@ -16,6 +16,17 @@ export function useCreateBarberMutation() {
   const mutation = useMutation(createBarber, {
     onSuccess: () => {
       queryClient.invalidateQueries('barbers');
+    },
+  });
+  return mutation;
+}
+
+export function useUpdateBarberMutation() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation(updateBarber, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries('barbers');
+      queryClient.invalidateQueries(['barber', data.id]);
     },
   });
   return mutation;
