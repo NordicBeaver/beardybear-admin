@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { createBarber, getBarber, getBarbers, updateBarber } from './api';
+import { createBarber, getBarber, getBarbers, getBarberServices, updateBarber } from './api';
 
 export function useGetBarbersQuery() {
   const query = useQuery('barbers', getBarbers);
@@ -30,4 +30,9 @@ export function useUpdateBarberMutation() {
     },
   });
   return mutation;
+}
+
+export function useGetBarberServicesQuery() {
+  const query = useQuery('barber-services', getBarberServices);
+  return query;
 }

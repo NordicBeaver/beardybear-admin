@@ -42,3 +42,16 @@ export async function updateBarber(dto: UpdateBarberDto) {
   const data = response.data;
   return data;
 }
+
+export interface BarberServiceDto {
+  id: number;
+  name: string;
+  price: string;
+  description: string;
+}
+
+export async function getBarberServices() {
+  const response = await axios.get<BarberServiceDto[]>(`${host}/barber-services`);
+  const data = response.data;
+  return data;
+}
