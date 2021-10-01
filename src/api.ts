@@ -56,6 +56,12 @@ export async function getBarberServices() {
   return data;
 }
 
+export async function getBarberService(id: number) {
+  const response = await axios.get<BarberServiceDto>(`${host}/barber-services/${id}`);
+  const data = response.data;
+  return data;
+}
+
 export interface CreateBarberServiceDto {
   name: string;
   price: string;
@@ -64,6 +70,19 @@ export interface CreateBarberServiceDto {
 
 export async function createBarberService(dto: CreateBarberServiceDto) {
   const response = await axios.post<BarberServiceDto>(`${host}/barber-services`, dto);
+  const data = response.data;
+  return data;
+}
+
+export interface UpdateBarberSerivceDto {
+  id: number;
+  name: string;
+  price: string;
+  description: string;
+}
+
+export async function updateBarberService(dto: UpdateBarberSerivceDto) {
+  const response = await axios.post<BarberServiceDto>(`${host}/barber-services/update`, dto);
   const data = response.data;
   return data;
 }
