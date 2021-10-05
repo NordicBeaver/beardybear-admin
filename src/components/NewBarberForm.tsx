@@ -1,6 +1,7 @@
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import { useCreateBarberMutation } from '../queries';
+import FileSelector from './FileSelector';
 
 interface NewBarberFormValues {
   name: string;
@@ -33,6 +34,7 @@ export default function NewBarberForm() {
           <label htmlFor="description">Description</label>
           <Field name="description" type="text"></Field>
         </div>
+        <FileSelector onSelect={(file) => console.log(file)}></FileSelector>
         <input type="submit" value="New Barber"></input>
       </Form>
     </Formik>
