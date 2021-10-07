@@ -3,6 +3,7 @@ import React from 'react';
 import { useParams } from 'react-router';
 import styled from 'styled-components/macro';
 import { useGetBarberServiceQuery, useUpdateBarberServiceMutation } from '../queries';
+import { ActionButton } from './ActionButton';
 import TextInput from './TextInput';
 
 const InputContainer = styled.div`
@@ -54,7 +55,7 @@ export default function UpdateBarberServiceForm() {
         <InputContainer>
           <TextInput label="Description" name="description"></TextInput>
         </InputContainer>
-        <input type="submit" value="Update Service"></input>
+        <ActionButton type="submit">Update Service</ActionButton>
       </Form>
     </Formik>
   );

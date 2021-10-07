@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { imageUrl, uploadImage } from '../api';
 import { useGetBarberQuery, useUpdateBarberMutation } from '../queries';
+import { ActionButton } from './ActionButton';
 import FileSelector from './FileSelector';
 import ImagePreview from './ImagePreview';
 import TextInput from './TextInput';
@@ -80,7 +81,7 @@ export default function UpdateBarberForm() {
           </PictureContainer>
           <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>
         </InputContainer>
-        <input type="submit" value="Update Barber"></input>
+        <ActionButton type="submit">Update Barber</ActionButton>
       </Form>
     </Formik>
   );

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { uploadImage } from '../api';
 import { useCreateBarberMutation } from '../queries';
+import { ActionButton } from './ActionButton';
 import FileSelector from './FileSelector';
 import ImagePreview from './ImagePreview';
 import TextInput from './TextInput';
@@ -60,7 +61,7 @@ export default function NewBarberForm() {
           </PictureContainer>
           <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>
         </InputContainer>
-        <input type="submit" value="New Barber"></input>
+        <ActionButton type="submit">New Barber</ActionButton>
       </Form>
     </Formik>
   );

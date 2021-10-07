@@ -2,6 +2,7 @@ import { Form, Formik } from 'formik';
 import React from 'react';
 import styled from 'styled-components/macro';
 import { useCreateBarberServiceMutation } from '../queries';
+import { ActionButton } from './ActionButton';
 import TextInput from './TextInput';
 
 const InputContainer = styled.div`
@@ -43,7 +44,7 @@ export default function NewBarberServiceForm() {
         <InputContainer>
           <TextInput label="Description" name="description"></TextInput>
         </InputContainer>
-        <input type="submit" value="New Barber Service"></input>
+        <ActionButton type="submit">New Service</ActionButton>
       </Form>
     </Formik>
   );
