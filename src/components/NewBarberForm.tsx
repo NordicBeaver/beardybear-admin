@@ -1,9 +1,15 @@
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
+import styled from 'styled-components/macro';
 import { uploadImage } from '../api';
 import { useCreateBarberMutation } from '../queries';
 import FileSelector from './FileSelector';
 import ImagePreview from './ImagePreview';
+import TextInput from './TextInput';
+
+const InputContainer = styled.div`
+  margin-bottom: 1em;
+`;
 
 interface NewBarberFormValues {
   name: string;
@@ -33,14 +39,12 @@ export default function NewBarberForm() {
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form>
-        <div>
-          <label htmlFor="name">Name</label>
-          <Field name="name" type="text"></Field>
-        </div>
-        <div>
-          <label htmlFor="description">Description</label>
-          <Field name="description" type="text"></Field>
-        </div>
+        <InputContainer>
+          <TextInput label="Name" name="name"></TextInput>
+        </InputContainer>
+        <InputContainer>
+          <TextInput label="Description" name="description"></TextInput>
+        </InputContainer>
         <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>
         {imageFile !== null ? <ImagePreview file={imageFile}></ImagePreview> : null}
         <input type="submit" value="New Barber"></input>
