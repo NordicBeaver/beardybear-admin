@@ -1,4 +1,19 @@
 import React from 'react';
+import styled from 'styled-components/macro';
+
+const BrowseButton = styled.label`
+  display: inline-block;
+  background-color: #fff;
+  color: #141414;
+  padding: 0.3em 0.6em;
+  font-size: 1.2em;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
 
 export interface FileSelectorProps {
   onSelect: (file: File) => void;
@@ -16,8 +31,9 @@ export default function FileSelector({ onSelect }: FileSelectorProps) {
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleChange} accept="image/*"></input>
-    </div>
+    <BrowseButton>
+      Browse
+      <input type="file" onChange={handleChange} accept="image/*" hidden></input>
+    </BrowseButton>
   );
 }

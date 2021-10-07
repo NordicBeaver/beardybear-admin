@@ -12,6 +12,20 @@ const InputContainer = styled.div`
   margin-bottom: 1em;
 `;
 
+const PictureContainer = styled.div`
+  width: 400px;
+  height: 400px;
+  border: 1px solid #ffffff;
+  background-color: #333;
+  margin-bottom: 1em;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+`;
+
 interface UpdateBarberFormValues {
   name: string;
   description: string;
@@ -56,13 +70,16 @@ export default function UpdateBarberForm() {
         <InputContainer>
           <TextInput label="Description" name="description"></TextInput>
         </InputContainer>
-
-        <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>
-        {imageFile !== null ? (
-          <ImagePreview file={imageFile}></ImagePreview>
-        ) : barberQuery.data.picture != null ? (
-          <img src={imageUrl(barberQuery.data.picture)} alt={`${barberQuery.data.name}`}></img>
-        ) : null}
+        <InputContainer>
+          <PictureContainer>
+            {imageFile !== null ? (
+              <ImagePreview file={imageFile} width={400} height={400}></ImagePreview>
+            ) : barberQuery.data.picture != null ? (
+              <Image src={imageUrl(barberQuery.data.picture)} alt={`${barberQuery.data.name}`}></Image>
+            ) : null}
+          </PictureContainer>
+          <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>
+        </InputContainer>
         <input type="submit" value="Update Barber"></input>
       </Form>
     </Formik>

@@ -8,6 +8,14 @@ import ImagePreview from './ImagePreview';
 import TextInput from './TextInput';
 
 const InputContainer = styled.div`
+  margin-bottom: 2em;
+`;
+
+const PictureContainer = styled.div`
+  width: 400px;
+  height: 400px;
+  border: 1px solid #ffffff;
+  background-color: #333;
   margin-bottom: 1em;
 `;
 
@@ -45,8 +53,13 @@ export default function NewBarberForm() {
         <InputContainer>
           <TextInput label="Description" name="description"></TextInput>
         </InputContainer>
-        <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>
-        {imageFile !== null ? <ImagePreview file={imageFile}></ImagePreview> : null}
+
+        <InputContainer>
+          <PictureContainer>
+            {imageFile != null ? <ImagePreview file={imageFile} width={400} height={400}></ImagePreview> : null}
+          </PictureContainer>
+          <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>
+        </InputContainer>
         <input type="submit" value="New Barber"></input>
       </Form>
     </Formik>

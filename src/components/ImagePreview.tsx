@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components/macro';
 
 function readAsDataUrl(file: File) {
   const promise = new Promise<string>((resolve, reject) => {
@@ -10,10 +11,16 @@ function readAsDataUrl(file: File) {
   return promise;
 }
 
+const Image = styled.img`
+  object-fit: contain;
+`;
+
 export interface ImagePreviewProps {
   file: File;
+  width: number;
+  height: number;
 }
-export default function ImagePreview({ file }: ImagePreviewProps) {
+export default function ImagePreview({ file, width, height }: ImagePreviewProps) {
   const [dataUrl, setDataUrl] = useState('');
 
   useEffect(() => {
@@ -24,5 +31,5 @@ export default function ImagePreview({ file }: ImagePreviewProps) {
     updateDataUrl();
   }, [file]);
 
-  return <img src={dataUrl} alt={file.name} />;
+  return <Image src={dataUrl} alt={file.name} width={width} height={height} />;
 }
