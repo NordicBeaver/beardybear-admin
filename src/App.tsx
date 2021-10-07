@@ -12,7 +12,7 @@ import NewBarberServicePage from './components/NewBarberServicePage';
 import BarberServicePage from './components/BarberServicePage';
 
 const AppStyled = styled.div`
-  height: 100%;
+  min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr;
   grid-template-columns: 1fr 3fr;
