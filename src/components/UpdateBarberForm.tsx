@@ -1,7 +1,10 @@
 import { Field, Form, Formik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { imageUrl, uploadImage } from '../api';
 import { useGetBarberQuery, useUpdateBarberMutation } from '../queries';
+import FileSelector from './FileSelector';
+import ImagePreview from './ImagePreview';
 
 interface UpdateBarberFormValues {
   name: string;
@@ -11,6 +14,8 @@ interface UpdateBarberFormValues {
 export default function UpdateBarberForm() {
   const { id: barberIdString } = useParams<{ id: string }>();
   const barberId = parseInt(barberIdString);
+
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const barberQuery = useGetBarberQuery(barberId);
 
@@ -25,12 +30,14 @@ export default function UpdateBarberForm() {
     description: barberQuery.data.description,
   };
 
-  const handleSubmit = (values: UpdateBarberFormValues) => {
+  const handleSubmit = async (values: UpdateBarberFormValues) => {
+    const imageFilename = imageFile !== null ? await uploadImage(imageFile) : barberQuery.data.picture;
+
     updateBarberMutation.mutate({
       id: barberId,
       name: values.name,
       description: values.description,
-      picture: null,
+      picture: imageFilename,
     });
   };
 
@@ -45,6 +52,12 @@ export default function UpdateBarberForm() {
           <label htmlFor="description">Description</label>
           <Field name="description" type="text"></Field>
         </div>
+        <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>
+        {imageFile !== null ? (
+          <ImagePreview file={imageFile}></ImagePreview>
+        ) : barberQuery.data.picture != null ? (
+          <img src={imageUrl(barberQuery.data.picture)} alt={`${barberQuery.data.name}`}></img>
+        ) : null}
         <input type="submit" value="Update Barber"></input>
       </Form>
     </Formik>
