@@ -30,7 +30,7 @@ export default function BarbersTable() {
       </thead>
       <tbody>
         {barbersQuery.data.map((barber) => (
-          <tr>
+          <tr key={barber.id}>
             <td>
               <Link to={`/barbers/${barber.id}`}>{barber.name}</Link>
             </td>

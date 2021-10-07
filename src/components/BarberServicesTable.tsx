@@ -21,7 +21,7 @@ export default function BarberServicesTable() {
       </thead>
       <tbody>
         {barberServicesQuery.data.map((barberService) => (
-          <tr>
+          <tr key={barberService.id}>
             <td>
               <Link to={`/services/${barberService.id}`}>{barberService.name}</Link>
             </td>
