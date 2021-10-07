@@ -23,6 +23,7 @@ export async function getBarber(id: number) {
 export interface CreateBarberDto {
   name: string;
   description: string;
+  picture: string | null;
 }
 
 export async function createBarber(dto: CreateBarberDto) {
@@ -35,6 +36,7 @@ export interface UpdateBarberDto {
   id: number;
   name: string;
   description: string;
+  picture: string | null;
 }
 
 export async function updateBarber(dto: UpdateBarberDto) {
@@ -83,6 +85,14 @@ export interface UpdateBarberSerivceDto {
 
 export async function updateBarberService(dto: UpdateBarberSerivceDto) {
   const response = await axios.post<BarberServiceDto>(`${host}/barber-services/update`, dto);
+  const data = response.data;
+  return data;
+}
+
+export async function uploadImage(file: File) {
+  const formData = new FormData();
+  formData.append('file', file);
+  const response = await axios.post<string>(`${host}/images`, formData);
   const data = response.data;
   return data;
 }

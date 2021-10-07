@@ -1,5 +1,6 @@
 import { Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
+import { uploadImage } from '../api';
 import { useCreateBarberMutation } from '../queries';
 import FileSelector from './FileSelector';
 import ImagePreview from './ImagePreview';
@@ -19,10 +20,13 @@ export default function NewBarberForm() {
 
   const createBarberMutation = useCreateBarberMutation();
 
-  const handleSubmit = (values: NewBarberFormValues) => {
+  const handleSubmit = async (values: NewBarberFormValues) => {
+    const imageFilename = imageFile !== null ? await uploadImage(imageFile) : null;
+
     createBarberMutation.mutate({
       name: values.name,
       description: values.description,
+      picture: imageFilename,
     });
   };
 

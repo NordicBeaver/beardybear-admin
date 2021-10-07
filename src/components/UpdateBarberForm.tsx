@@ -30,6 +30,7 @@ export default function UpdateBarberForm() {
       id: barberId,
       name: values.name,
       description: values.description,
+      picture: null,
     });
   };
 
