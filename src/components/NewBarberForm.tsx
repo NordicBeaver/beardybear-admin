@@ -1,7 +1,8 @@
 import { Field, Form, Formik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import { useCreateBarberMutation } from '../queries';
 import FileSelector from './FileSelector';
+import ImagePreview from './ImagePreview';
 
 interface NewBarberFormValues {
   name: string;
@@ -9,6 +10,8 @@ interface NewBarberFormValues {
 }
 
 export default function NewBarberForm() {
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
   const initialValues: NewBarberFormValues = {
     name: '',
     description: '',
@@ -34,7 +37,8 @@ export default function NewBarberForm() {
           <label htmlFor="description">Description</label>
           <Field name="description" type="text"></Field>
         </div>
-        <FileSelector onSelect={(file) => console.log(file)}></FileSelector>
+        <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>
+        {imageFile !== null ? <ImagePreview file={imageFile}></ImagePreview> : null}
         <input type="submit" value="New Barber"></input>
       </Form>
     </Formik>
