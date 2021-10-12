@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {
   createBarber,
   createBarberService,
+  getAppointments,
   getBarber,
   getBarbers,
   getBarberService,
@@ -70,4 +71,9 @@ export function useUpdateBarberServiceMutation() {
     },
   });
   return mutation;
+}
+
+export function useGetAppointmentsQuery() {
+  const query = useQuery('appointments', getAppointments);
+  return query;
 }

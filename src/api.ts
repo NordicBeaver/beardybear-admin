@@ -101,3 +101,16 @@ export async function uploadImage(file: File) {
   const data = response.data;
   return data;
 }
+
+export interface AppointmentDto {
+  id: number;
+  barber: BarberDto;
+  barberService: BarberServiceDto;
+  datetime: string;
+}
+
+export async function getAppointments() {
+  const response = await axios.get<AppointmentDto[]>(`${host}/appointments`);
+  const data = response.data;
+  return data;
+}
