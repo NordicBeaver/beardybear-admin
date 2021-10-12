@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {
+  createAppointment,
   createBarber,
   createBarberService,
   getAppointments,
@@ -76,4 +77,14 @@ export function useUpdateBarberServiceMutation() {
 export function useGetAppointmentsQuery() {
   const query = useQuery('appointments', getAppointments);
   return query;
+}
+
+export function useCreateAppointmentMutation() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation(createAppointment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('appointments');
+    },
+  });
+  return mutation;
 }

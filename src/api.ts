@@ -114,3 +114,15 @@ export async function getAppointments() {
   const data = response.data;
   return data;
 }
+
+export interface CreateAppointmentsDto {
+  barberId: number;
+  barberServiceId: number;
+  datetime: string;
+}
+
+export async function createAppointment(dto: CreateAppointmentsDto) {
+  const response = await axios.post<AppointmentDto>(`${host}/appointments`, dto);
+  const data = response.data;
+  return data;
+}
