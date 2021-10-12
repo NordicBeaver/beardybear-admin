@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { imageUrl, uploadImage } from '../../api';
+import { barberFromDto } from '../../domain/Barber';
 import { useGetBarberQuery, useUpdateBarberMutation } from '../../queries';
 import { ActionButton } from '../common/ActionButton';
 import FileSelector from '../common/FileSelector';
@@ -46,13 +47,15 @@ export default function UpdateBarberForm() {
     return <p>Loading...</p>;
   }
 
+  const barber = barberFromDto(barberQuery.data);
+
   const initialValues: UpdateBarberFormValues = {
-    name: barberQuery.data.name,
-    description: barberQuery.data.description,
+    name: barber.name,
+    description: barber.description,
   };
 
   const handleSubmit = async (values: UpdateBarberFormValues) => {
-    const imageFilename = imageFile !== null ? await uploadImage(imageFile) : barberQuery.data.picture;
+    const imageFilename = imageFile !== null ? await uploadImage(imageFile) : barber.picture;
 
     updateBarberMutation.mutate({
       id: barberId,
@@ -75,8 +78,8 @@ export default function UpdateBarberForm() {
           <PictureContainer>
             {imageFile !== null ? (
               <ImagePreview file={imageFile} width={400} height={400}></ImagePreview>
-            ) : barberQuery.data.picture != null ? (
-              <Image src={imageUrl(barberQuery.data.picture)} alt={`${barberQuery.data.name}`}></Image>
+            ) : barber.picture != null ? (
+              <Image src={imageUrl(barber.picture)} alt={`${barber.name}`}></Image>
             ) : null}
           </PictureContainer>
           <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>

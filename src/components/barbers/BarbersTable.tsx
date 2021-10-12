@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { imageUrl } from '../../api';
+import { barberFromDto } from '../../domain/Barber';
 import { useGetBarbersQuery } from '../../queries';
 import { Table } from '../common/Table';
 
@@ -19,6 +20,8 @@ export default function BarbersTable() {
     return <p>Loading...</p>;
   }
 
+  const barbers = barbersQuery.data.map(barberFromDto);
+
   return (
     <Table>
       <thead>
@@ -29,7 +32,7 @@ export default function BarbersTable() {
         </tr>
       </thead>
       <tbody>
-        {barbersQuery.data.map((barber) => (
+        {barbers.map((barber) => (
           <tr key={barber.id}>
             <td>
               <Link to={`/barbers/${barber.id}`}>{barber.name}</Link>

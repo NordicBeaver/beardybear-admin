@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { appointmentFromDto } from '../../domain/Appointment';
 import { useGetAppointmentsQuery } from '../../queries';
 import { Table } from '../common/Table';
 
@@ -9,6 +10,8 @@ export default function AppointmentsTable() {
   if (appointmentsQuery.status !== 'success') {
     return <p>Loading...</p>;
   }
+
+  const appointments = appointmentsQuery.data.map(appointmentFromDto);
 
   return (
     <Table>
@@ -20,7 +23,7 @@ export default function AppointmentsTable() {
         </tr>
       </thead>
       <tbody>
-        {appointmentsQuery.data.map((appointment) => (
+        {appointments.map((appointment) => (
           <tr key={appointment.id}>
             <td>
               <Link to={`/barbers/${appointment.barber.id}`}>{appointment.barber.name}</Link>
@@ -28,7 +31,7 @@ export default function AppointmentsTable() {
             <td>
               <Link to={`/services/${appointment.barberService.id}`}>{appointment.barberService.name}</Link>
             </td>
-            <td>{appointment.datetime}</td>
+            <td>{appointment.datetime.toLocaleString()}</td>
           </tr>
         ))}
       </tbody>

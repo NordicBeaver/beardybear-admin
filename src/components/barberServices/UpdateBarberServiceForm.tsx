@@ -2,6 +2,7 @@ import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import { useParams } from 'react-router';
 import styled from 'styled-components/macro';
+import { barberServiceFromDto } from '../../domain/BarberService';
 import { useGetBarberServiceQuery, useUpdateBarberServiceMutation } from '../../queries';
 import { ActionButton } from '../common/ActionButton';
 import TextInput from '../common/TextInput';
@@ -28,10 +29,12 @@ export default function UpdateBarberServiceForm() {
     return <p>Loading...</p>;
   }
 
+  const barberService = barberServiceFromDto(barberServiceQuery.data);
+
   const initialValues: UpdateBarberServiceFormValues = {
-    name: barberServiceQuery.data.name,
-    price: barberServiceQuery.data.price,
-    description: barberServiceQuery.data.description,
+    name: barberService.name,
+    price: barberService.price.toFixed(2),
+    description: barberService.description,
   };
 
   const handleSubmit = (values: UpdateBarberServiceFormValues) => {
