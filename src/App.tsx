@@ -11,6 +11,7 @@ import BarberPage from './components/barbers/BarberPage';
 import NewBarberServicePage from './components/barberServices/NewBarberServicePage';
 import BarberServicePage from './components/barberServices/BarberServicePage';
 import AppointmentsPage from './components/appointments/AppointmentsPage';
+import NewAppointmentPage from './components/appointments/NewAppointmentPage';
 
 const AppStyled = styled.div`
   min-height: 100vh;
@@ -67,6 +68,9 @@ function App() {
               </Route>
               <Route path="/services">
                 <BarberServicesPage></BarberServicesPage>
+              </Route>
+              <Route path="/appointments/new">
+                <NewAppointmentPage></NewAppointmentPage>
               </Route>
               <Route path="/appointments">
                 <AppointmentsPage></AppointmentsPage>
