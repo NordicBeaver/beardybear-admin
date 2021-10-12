@@ -8,6 +8,7 @@ const Container = styled.div`
 `;
 
 const TextInputStyled = styled.input`
+  width: 100%;
   font-family: inherit;
   background-color: #141414;
   color: #ffffff;

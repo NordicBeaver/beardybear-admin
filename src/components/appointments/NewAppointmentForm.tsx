@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { useGetBarberServicesQuery, useGetBarbersQuery } from '../../queries';
 import { ActionButton } from '../common/ActionButton';
+import Dropdown, { Option } from '../common/Dropdown';
 import TextInput from '../common/TextInput';
 
 const InputContainer = styled.div`
@@ -37,24 +38,18 @@ export default function NewAppointmentForm() {
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form>
         <InputContainer>
-          <Field as="select" name="barberId">
-            <option disabled selected>
-              Select a barber
-            </option>
+          <Dropdown name="barberId" label="Barber">
             {barbersQuery.data.map((barber) => (
-              <option value={barber.id}>{barber.name}</option>
+              <Option value={barber.id}>{barber.name}</Option>
             ))}
-          </Field>
+          </Dropdown>
         </InputContainer>
         <InputContainer>
-          <Field as="select" name="barberServiceId">
-            <option disabled selected>
-              Select a service
-            </option>
+          <Dropdown name="barberServiceId" label="Service">
             {barberServicesQuery.data.map((barberService) => (
-              <option value={barberService.id}>{barberService.name}</option>
+              <Option value={barberService.id}>{barberService.name}</Option>
             ))}
-          </Field>
+          </Dropdown>
         </InputContainer>
         <InputContainer>
           <TextInput label="Date and Time" name="datetime"></TextInput>
