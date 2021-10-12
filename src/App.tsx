@@ -1,15 +1,15 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import styled from 'styled-components/macro';
-import BarbersPage from './components/BarbersPage';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
+import BarbersPage from './components/barbers/BarbersPage';
+import Header from './components/common/Header';
+import Sidebar from './components/common/Sidebar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import BarberServicesPage from './components/BarberServicesPage';
-import NewBarberPage from './components/NewBarberPage';
-import BarberPage from './components/BarberPage';
-import NewBarberServicePage from './components/NewBarberServicePage';
-import BarberServicePage from './components/BarberServicePage';
+import BarberServicesPage from './components/barberServices/BarberServicesPage';
+import NewBarberPage from './components/barbers/NewBarberPage';
+import BarberPage from './components/barbers/BarberPage';
+import NewBarberServicePage from './components/barberServices/NewBarberServicePage';
+import BarberServicePage from './components/barberServices/BarberServicePage';
 
 const AppStyled = styled.div`
   min-height: 100vh;

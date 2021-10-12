@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import NewBarberForm from './NewBarberForm';
-import { PageHeader } from './PageHeader';
+import { PageHeader } from '../common/PageHeader';
 
 const PageHeading = styled.h2`
   font-weight: 500;

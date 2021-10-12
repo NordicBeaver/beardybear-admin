@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useGetBarberServicesQuery } from '../queries';
-import { Table } from './Table';
+import { useGetBarberServicesQuery } from '../../queries';
+import { Table } from '../common/Table';
 
 export default function BarberServicesTable() {
   const barberServicesQuery = useGetBarberServicesQuery();

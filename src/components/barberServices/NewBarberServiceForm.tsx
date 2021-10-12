@@ -1,9 +1,9 @@
 import { Form, Formik } from 'formik';
 import React from 'react';
 import styled from 'styled-components/macro';
-import { useCreateBarberServiceMutation } from '../queries';
-import { ActionButton } from './ActionButton';
-import TextInput from './TextInput';
+import { useCreateBarberServiceMutation } from '../../queries';
+import { ActionButton } from '../common/ActionButton';
+import TextInput from '../common/TextInput';
 
 const InputContainer = styled.div`
   margin-bottom: 1em;

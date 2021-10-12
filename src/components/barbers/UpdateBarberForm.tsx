@@ -2,12 +2,12 @@ import { Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import { imageUrl, uploadImage } from '../api';
-import { useGetBarberQuery, useUpdateBarberMutation } from '../queries';
-import { ActionButton } from './ActionButton';
-import FileSelector from './FileSelector';
-import ImagePreview from './ImagePreview';
-import TextInput from './TextInput';
+import { imageUrl, uploadImage } from '../../api';
+import { useGetBarberQuery, useUpdateBarberMutation } from '../../queries';
+import { ActionButton } from '../common/ActionButton';
+import FileSelector from '../common/FileSelector';
+import ImagePreview from '../common/ImagePreview';
+import TextInput from '../common/TextInput';
 
 const InputContainer = styled.div`
   margin-bottom: 1em;

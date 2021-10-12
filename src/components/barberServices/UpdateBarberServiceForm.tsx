@@ -2,9 +2,9 @@ import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import { useParams } from 'react-router';
 import styled from 'styled-components/macro';
-import { useGetBarberServiceQuery, useUpdateBarberServiceMutation } from '../queries';
-import { ActionButton } from './ActionButton';
-import TextInput from './TextInput';
+import { useGetBarberServiceQuery, useUpdateBarberServiceMutation } from '../../queries';
+import { ActionButton } from '../common/ActionButton';
+import TextInput from '../common/TextInput';
 
 const InputContainer = styled.div`
   margin-bottom: 1em;
