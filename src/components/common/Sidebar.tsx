@@ -17,6 +17,9 @@ export default function Sidebar() {
       <SidebarItem>
         <Link to="/services">Services</Link>
       </SidebarItem>
+      <SidebarItem>
+        <Link to="/appointments">Appointments</Link>
+      </SidebarItem>
     </ul>
   );
 }
