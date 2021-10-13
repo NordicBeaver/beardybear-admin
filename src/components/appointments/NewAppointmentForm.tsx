@@ -1,10 +1,10 @@
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import React from 'react';
 import styled from 'styled-components/macro';
 import { useCreateAppointmentMutation, useGetBarberServicesQuery, useGetBarbersQuery } from '../../queries';
 import { ActionButton } from '../common/ActionButton';
+import DatetimeInput from '../common/DatetimeInput';
 import Dropdown, { Option } from '../common/Dropdown';
-import TextInput from '../common/TextInput';
 
 const InputContainer = styled.div`
   margin-bottom: 2em;
@@ -13,7 +13,7 @@ const InputContainer = styled.div`
 interface NewAppointmentFormValues {
   barberId: string | null;
   barberServiceId: string | null;
-  datetime: string;
+  datetime: Date;
 }
 
 export default function NewAppointmentForm() {
@@ -28,7 +28,7 @@ export default function NewAppointmentForm() {
   const initialValues: NewAppointmentFormValues = {
     barberId: null,
     barberServiceId: null,
-    datetime: '',
+    datetime: new Date(),
   };
 
   const handleSubmit = async (values: NewAppointmentFormValues) => {
@@ -38,7 +38,7 @@ export default function NewAppointmentForm() {
     createAppointmentMutation.mutate({
       barberId: parseInt(values.barberId),
       barberServiceId: parseInt(values.barberServiceId),
-      datetime: values.datetime,
+      datetime: values.datetime.toISOString(),
     });
   };
 
@@ -62,7 +62,7 @@ export default function NewAppointmentForm() {
           </Dropdown>
         </InputContainer>
         <InputContainer>
-          <TextInput label="Date and Time" name="datetime"></TextInput>
+          <DatetimeInput label="Date and Time" name="datetime"></DatetimeInput>
         </InputContainer>
         <ActionButton type="submit">New Appointment</ActionButton>
       </Form>
