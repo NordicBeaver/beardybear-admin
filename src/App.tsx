@@ -1,17 +1,18 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import styled from 'styled-components/macro';
-import BarbersPage from './components/barbers/BarbersPage';
-import Header from './components/common/Header';
-import Sidebar from './components/common/Sidebar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import BarberServicesPage from './components/barberServices/BarberServicesPage';
-import NewBarberPage from './components/barbers/NewBarberPage';
-import BarberPage from './components/barbers/BarberPage';
-import NewBarberServicePage from './components/barberServices/NewBarberServicePage';
-import BarberServicePage from './components/barberServices/BarberServicePage';
+import styled from 'styled-components/macro';
 import AppointmentsPage from './components/appointments/AppointmentsPage';
 import NewAppointmentPage from './components/appointments/NewAppointmentPage';
+import LoginFormPage from './components/auth/LoginFormPage';
+import BarberPage from './components/barbers/BarberPage';
+import BarbersPage from './components/barbers/BarbersPage';
+import NewBarberPage from './components/barbers/NewBarberPage';
+import BarberServicePage from './components/barberServices/BarberServicePage';
+import BarberServicesPage from './components/barberServices/BarberServicesPage';
+import NewBarberServicePage from './components/barberServices/NewBarberServicePage';
+import Header from './components/common/Header';
+import Sidebar from './components/common/Sidebar';
 
 const AppStyled = styled.div`
   min-height: 100vh;
@@ -36,6 +37,10 @@ const ContentContainer = styled.div`
   padding: 2em;
 `;
 
+const FullPageContainer = styled.div`
+  grid-area: 2 / 1 / 3 / 3;
+`;
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -46,37 +51,47 @@ function App() {
           <HeaderContainer>
             <Header></Header>
           </HeaderContainer>
-          <SidebarContainer>
-            <Sidebar></Sidebar>
-          </SidebarContainer>
-          <ContentContainer>
-            <Switch>
-              <Route path="/barbers/new">
-                <NewBarberPage></NewBarberPage>
-              </Route>
-              <Route path="/barbers/:id">
-                <BarberPage></BarberPage>
-              </Route>
-              <Route path="/barbers">
-                <BarbersPage></BarbersPage>
-              </Route>
-              <Route path="/services/new">
-                <NewBarberServicePage></NewBarberServicePage>
-              </Route>
-              <Route path="/services/:id">
-                <BarberServicePage></BarberServicePage>
-              </Route>
-              <Route path="/services">
-                <BarberServicesPage></BarberServicesPage>
-              </Route>
-              <Route path="/appointments/new">
-                <NewAppointmentPage></NewAppointmentPage>
-              </Route>
-              <Route path="/appointments">
-                <AppointmentsPage></AppointmentsPage>
-              </Route>
-            </Switch>
-          </ContentContainer>
+
+          <Switch>
+            <Route path="/login">
+              <FullPageContainer>
+                <LoginFormPage></LoginFormPage>
+              </FullPageContainer>
+            </Route>
+            <Route>
+              <SidebarContainer>
+                <Sidebar></Sidebar>
+              </SidebarContainer>
+              <ContentContainer>
+                <Switch>
+                  <Route path="/barbers/new">
+                    <NewBarberPage></NewBarberPage>
+                  </Route>
+                  <Route path="/barbers/:id">
+                    <BarberPage></BarberPage>
+                  </Route>
+                  <Route path="/barbers">
+                    <BarbersPage></BarbersPage>
+                  </Route>
+                  <Route path="/services/new">
+                    <NewBarberServicePage></NewBarberServicePage>
+                  </Route>
+                  <Route path="/services/:id">
+                    <BarberServicePage></BarberServicePage>
+                  </Route>
+                  <Route path="/services">
+                    <BarberServicesPage></BarberServicesPage>
+                  </Route>
+                  <Route path="/appointments/new">
+                    <NewAppointmentPage></NewAppointmentPage>
+                  </Route>
+                  <Route path="/appointments">
+                    <AppointmentsPage></AppointmentsPage>
+                  </Route>
+                </Switch>
+              </ContentContainer>
+            </Route>
+          </Switch>
         </AppStyled>
       </Router>
     </QueryClientProvider>
