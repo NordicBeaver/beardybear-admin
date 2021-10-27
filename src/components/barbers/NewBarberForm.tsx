@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { uploadImage } from '../../api';
 import { useCreateBarberMutation } from '../../queries';
+import { useAuth } from '../auth/AuthContext';
 import { ActionButton } from '../common/ActionButton';
 import FileSelector from '../common/FileSelector';
 import ImagePreview from '../common/ImagePreview';
@@ -27,6 +28,8 @@ interface NewBarberFormValues {
 
 export default function NewBarberForm() {
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const auth = useAuth()!;
+  const token = auth.token!;
 
   const initialValues: NewBarberFormValues = {
     name: '',
@@ -36,7 +39,7 @@ export default function NewBarberForm() {
   const createBarberMutation = useCreateBarberMutation();
 
   const handleSubmit = async (values: NewBarberFormValues) => {
-    const imageFilename = imageFile !== null ? await uploadImage(imageFile) : null;
+    const imageFilename = imageFile !== null ? await uploadImage(imageFile, token) : null;
 
     createBarberMutation.mutate({
       name: values.name,

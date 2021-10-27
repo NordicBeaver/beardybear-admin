@@ -2,15 +2,20 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {
   createAppointment,
   createBarber,
+  CreateBarberDto,
   createBarberService,
+  CreateBarberServiceDto,
   getAppointments,
   getBarber,
   getBarbers,
   getBarberService,
   getBarberServices,
   updateBarber,
+  UpdateBarberDto,
+  UpdateBarberSerivceDto,
   updateBarberService,
 } from './api';
+import { useAuth } from './components/auth/AuthContext';
 
 export function useGetBarbersQuery() {
   const query = useQuery('barbers', getBarbers);
@@ -24,7 +29,9 @@ export function useGetBarberQuery(id: number) {
 
 export function useCreateBarberMutation() {
   const queryClient = useQueryClient();
-  const mutation = useMutation(createBarber, {
+  const auth = useAuth()!;
+  const token = auth.token!;
+  const mutation = useMutation((dto: CreateBarberDto) => createBarber(dto, token), {
     onSuccess: () => {
       queryClient.invalidateQueries('barbers');
     },
@@ -34,7 +41,9 @@ export function useCreateBarberMutation() {
 
 export function useUpdateBarberMutation() {
   const queryClient = useQueryClient();
-  const mutation = useMutation(updateBarber, {
+  const auth = useAuth()!;
+  const token = auth.token!;
+  const mutation = useMutation((dto: UpdateBarberDto) => updateBarber(dto, token), {
     onSuccess: (data) => {
       queryClient.invalidateQueries('barbers');
       queryClient.invalidateQueries(['barber', data.id]);
@@ -55,7 +64,9 @@ export function useGetBarberServiceQuery(id: number) {
 
 export function useCreateBarberServiceMutation() {
   const queryClient = useQueryClient();
-  const mutation = useMutation(createBarberService, {
+  const auth = useAuth()!;
+  const token = auth.token!;
+  const mutation = useMutation((dto: CreateBarberServiceDto) => createBarberService(dto, token), {
     onSuccess: () => {
       queryClient.invalidateQueries('barber-services');
     },
@@ -65,7 +76,9 @@ export function useCreateBarberServiceMutation() {
 
 export function useUpdateBarberServiceMutation() {
   const queryClient = useQueryClient();
-  const mutation = useMutation(updateBarberService, {
+  const auth = useAuth()!;
+  const token = auth.token!;
+  const mutation = useMutation((dto: UpdateBarberSerivceDto) => updateBarberService(dto, token), {
     onSuccess: (data) => {
       queryClient.invalidateQueries('barber-services');
       queryClient.invalidateQueries(['barber-service', data.id]);
@@ -75,7 +88,9 @@ export function useUpdateBarberServiceMutation() {
 }
 
 export function useGetAppointmentsQuery() {
-  const query = useQuery('appointments', getAppointments);
+  const auth = useAuth()!;
+  const token = auth.token!;
+  const query = useQuery('appointments', () => getAppointments(token));
   return query;
 }
 

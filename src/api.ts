@@ -2,6 +2,12 @@ import axios from 'axios';
 
 const host = 'http://localhost:3000';
 
+function authHeaders(token: string) {
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+}
+
 export function imageUrl(filename: string) {
   return `${host}/images/${filename}`;
 }
@@ -31,8 +37,8 @@ export interface CreateBarberDto {
   picture: string | null;
 }
 
-export async function createBarber(dto: CreateBarberDto) {
-  const response = await axios.post<BarberDto>(`${host}/barbers`, dto);
+export async function createBarber(dto: CreateBarberDto, token: string) {
+  const response = await axios.post<BarberDto>(`${host}/barbers`, dto, { headers: authHeaders(token) });
   const data = response.data;
   return data;
 }
@@ -44,8 +50,8 @@ export interface UpdateBarberDto {
   picture: string | null;
 }
 
-export async function updateBarber(dto: UpdateBarberDto) {
-  const response = await axios.post<BarberDto>(`${host}/barbers/update`, dto);
+export async function updateBarber(dto: UpdateBarberDto, token: string) {
+  const response = await axios.post<BarberDto>(`${host}/barbers/update`, dto, { headers: authHeaders(token) });
   const data = response.data;
   return data;
 }
@@ -75,8 +81,8 @@ export interface CreateBarberServiceDto {
   description: string;
 }
 
-export async function createBarberService(dto: CreateBarberServiceDto) {
-  const response = await axios.post<BarberServiceDto>(`${host}/barber-services`, dto);
+export async function createBarberService(dto: CreateBarberServiceDto, token: string) {
+  const response = await axios.post<BarberServiceDto>(`${host}/barber-services`, dto, { headers: authHeaders(token) });
   const data = response.data;
   return data;
 }
@@ -88,16 +94,18 @@ export interface UpdateBarberSerivceDto {
   description: string;
 }
 
-export async function updateBarberService(dto: UpdateBarberSerivceDto) {
-  const response = await axios.post<BarberServiceDto>(`${host}/barber-services/update`, dto);
+export async function updateBarberService(dto: UpdateBarberSerivceDto, token: string) {
+  const response = await axios.post<BarberServiceDto>(`${host}/barber-services/update`, dto, {
+    headers: authHeaders(token),
+  });
   const data = response.data;
   return data;
 }
 
-export async function uploadImage(file: File) {
+export async function uploadImage(file: File, token: string) {
   const formData = new FormData();
   formData.append('file', file);
-  const response = await axios.post<string>(`${host}/images`, formData);
+  const response = await axios.post<string>(`${host}/images`, formData, { headers: authHeaders(token) });
   const data = response.data;
   return data;
 }
@@ -109,8 +117,8 @@ export interface AppointmentDto {
   datetime: string;
 }
 
-export async function getAppointments() {
-  const response = await axios.get<AppointmentDto[]>(`${host}/appointments`);
+export async function getAppointments(token: string) {
+  const response = await axios.get<AppointmentDto[]>(`${host}/appointments`, { headers: authHeaders(token) });
   const data = response.data;
   return data;
 }

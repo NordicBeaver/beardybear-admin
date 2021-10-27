@@ -5,6 +5,7 @@ import styled from 'styled-components/macro';
 import { imageUrl, uploadImage } from '../../api';
 import { barberFromDto } from '../../domain/Barber';
 import { useGetBarberQuery, useUpdateBarberMutation } from '../../queries';
+import { useAuth } from '../auth/AuthContext';
 import { ActionButton } from '../common/ActionButton';
 import FileSelector from '../common/FileSelector';
 import ImagePreview from '../common/ImagePreview';
@@ -37,6 +38,9 @@ export default function UpdateBarberForm() {
   const { id: barberIdString } = useParams<{ id: string }>();
   const barberId = parseInt(barberIdString);
 
+  const auth = useAuth()!;
+  const token = auth.token!;
+
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const barberQuery = useGetBarberQuery(barberId);
@@ -55,7 +59,7 @@ export default function UpdateBarberForm() {
   };
 
   const handleSubmit = async (values: UpdateBarberFormValues) => {
-    const imageFilename = imageFile !== null ? await uploadImage(imageFile) : barber.picture;
+    const imageFilename = imageFile !== null ? await uploadImage(imageFile, token) : barber.picture;
 
     updateBarberMutation.mutate({
       id: barberId,
