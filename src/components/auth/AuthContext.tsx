@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 
 interface AuthContextValues {
   token: string | null;
-  login: (username: string, password: string) => Promise<void>;
+  login: (token: string) => void;
   logout: () => void;
 }
 
@@ -11,8 +11,8 @@ const AuthContext = React.createContext<AuthContextValues | undefined>(undefined
 function AuthProvider({ children }: React.PropsWithChildren<{}>) {
   const [token, setToken] = useState<string | null>(null);
 
-  const login = async (username: string, password: string) => {
-    setToken('FAKE TOKEN');
+  const login = (token: string) => {
+    setToken(token);
   };
 
   const logout = () => {

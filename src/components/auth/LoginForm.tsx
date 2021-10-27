@@ -2,6 +2,7 @@ import { Form, Formik } from 'formik';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components/macro';
+import { login } from '../../api';
 import { ActionButton } from '../common/ActionButton';
 import TextInput from '../common/TextInput';
 import { useAuth } from './AuthContext';
@@ -16,7 +17,7 @@ interface LoginFormValues {
 }
 
 export default function LoginForm() {
-  const { login } = useAuth()!;
+  const auth = useAuth()!;
   const history = useHistory();
 
   const initialValues: LoginFormValues = {
@@ -25,8 +26,11 @@ export default function LoginForm() {
   };
 
   const handleSubmit = async (values: LoginFormValues) => {
-    await login('', '');
-    history.push('/');
+    const token = await login({ username: values.username, password: values.password });
+    if (token != null) {
+      auth.login(token);
+      history.push('/');
+    }
   };
 
   return (

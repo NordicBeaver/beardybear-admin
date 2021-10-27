@@ -126,3 +126,21 @@ export async function createAppointment(dto: CreateAppointmentsDto) {
   const data = response.data;
   return data;
 }
+
+export interface Credentials {
+  username: string;
+  password: string;
+}
+
+interface LoginResponse {
+  accessToken: string;
+}
+
+export async function login(credentials: Credentials) {
+  const response = await axios.post<LoginResponse>(`${host}/auth/login`, credentials);
+  if (response.status === 201) {
+    return response.data.accessToken;
+  } else {
+    return null;
+  }
+}
