@@ -8,6 +8,8 @@ import { ActionButton } from '../common/ActionButton';
 import FileSelector from '../common/FileSelector';
 import ImagePreview from '../common/ImagePreview';
 import TextInput from '../common/TextInput';
+import * as Yup from 'yup';
+import { useHistory } from 'react-router-dom';
 
 const InputContainer = styled.div`
   margin-bottom: 2em;
@@ -28,6 +30,9 @@ interface NewBarberFormValues {
 
 export default function NewBarberForm() {
   const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const history = useHistory();
+
   const auth = useAuth()!;
   const token = auth.token!;
 
@@ -36,20 +41,27 @@ export default function NewBarberForm() {
     description: '',
   };
 
+  const validationSchema: Yup.SchemaOf<NewBarberFormValues> = Yup.object({
+    name: Yup.string().required('Name cannot be empty'),
+    description: Yup.string().required('Description cannot be empty'),
+  });
+
   const createBarberMutation = useCreateBarberMutation();
 
   const handleSubmit = async (values: NewBarberFormValues) => {
     const imageFilename = imageFile !== null ? await uploadImage(imageFile, token) : null;
 
-    createBarberMutation.mutate({
+    await createBarberMutation.mutateAsync({
       name: values.name,
       description: values.description,
       picture: imageFilename,
     });
+
+    history.push('/barbers');
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
       <Form>
         <InputContainer>
           <TextInput label="Name" name="name"></TextInput>

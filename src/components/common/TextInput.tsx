@@ -1,6 +1,7 @@
 import { FieldHookConfig, useField } from 'formik';
 import React from 'react';
 import styled from 'styled-components/macro';
+import FormError from './FormError';
 
 const Container = styled.div`
   position: relative;
@@ -37,9 +38,12 @@ export default function TextInput({ label, ...config }: TextInputProps) {
   const [field, meta] = useField(config);
 
   return (
-    <Container>
-      <Label>{label}</Label>
-      <TextInputStyled type="text" {...field}></TextInputStyled>
-    </Container>
+    <div>
+      <Container>
+        <Label>{label}</Label>
+        <TextInputStyled type="text" {...field}></TextInputStyled>
+      </Container>
+      {meta.touched && meta.error !== undefined ? <FormError>{meta.error}</FormError> : null}
+    </div>
   );
 }
