@@ -1,6 +1,7 @@
 import { FieldHookConfig, useField } from 'formik';
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components/macro';
+import FormError from './FormError';
 
 const Container = styled.div`
   position: relative;
@@ -42,9 +43,12 @@ export default function Dropdown({ label, children, ...config }: DropdownProps) 
   const [field, meta] = useField(config);
 
   return (
-    <Container>
-      <Label>{label}</Label>
-      <Select {...field}>{children}</Select>
-    </Container>
+    <div>
+      <Container>
+        <Label>{label}</Label>
+        <Select {...field}>{children}</Select>
+      </Container>
+      {meta.touched && meta.error !== undefined ? <FormError>{meta.error}</FormError> : null}
+    </div>
   );
 }

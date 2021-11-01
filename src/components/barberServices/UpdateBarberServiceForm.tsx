@@ -1,7 +1,9 @@
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import React from 'react';
 import { useParams } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components/macro';
+import * as Yup from 'yup';
 import { barberServiceFromDto } from '../../domain/BarberService';
 import { useGetBarberServiceQuery, useUpdateBarberServiceMutation } from '../../queries';
 import { ActionButton } from '../common/ActionButton';
@@ -21,6 +23,8 @@ export default function UpdateBarberServiceForm() {
   const { id: barberServiceidString } = useParams<{ id: string }>();
   const barberServiceId = parseInt(barberServiceidString);
 
+  const history = useHistory();
+
   const barberServiceQuery = useGetBarberServiceQuery(barberServiceId);
 
   const updateBarberServiceMutation = useUpdateBarberServiceMutation();
@@ -37,17 +41,27 @@ export default function UpdateBarberServiceForm() {
     description: barberService.description,
   };
 
-  const handleSubmit = (values: UpdateBarberServiceFormValues) => {
-    updateBarberServiceMutation.mutate({
+  const validationSchema: Yup.SchemaOf<UpdateBarberServiceFormValues> = Yup.object({
+    name: Yup.string().required('Name cannot be empty'),
+    price: Yup.string()
+      .required('Price cannot be empty')
+      .matches(/^\d+(\.\d+)?$/, 'Price should be a number.'),
+    description: Yup.string().required('Description cannot be empty'),
+  });
+
+  const handleSubmit = async (values: UpdateBarberServiceFormValues) => {
+    await updateBarberServiceMutation.mutateAsync({
       id: barberServiceId,
       name: values.name,
       price: values.price,
       description: values.description,
     });
+
+    history.push('/services');
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
       <Form>
         <InputContainer>
           <TextInput label="Name" name="name"></TextInput>

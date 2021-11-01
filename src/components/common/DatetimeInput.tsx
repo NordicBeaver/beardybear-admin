@@ -3,6 +3,7 @@ import React, { forwardRef } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components/macro';
+import FormError from './FormError';
 
 const Container = styled.div`
   position: relative;
@@ -39,10 +40,13 @@ export default function DatetimeInput({ label, ...config }: DatetimeInputProps) 
   const [field, meta, helpers] = useField(config);
 
   const CustomInput = (
-    <Container>
-      <Label>{label}</Label>
-      <TextInputStyled type="text" value={field.value.toLocaleString()}></TextInputStyled>
-    </Container>
+    <div>
+      <Container>
+        <Label>{label}</Label>
+        <TextInputStyled type="text" value={field.value.toLocaleString()}></TextInputStyled>
+      </Container>
+      {meta.touched && meta.error !== undefined ? <FormError>{meta.error}</FormError> : null}
+    </div>
   );
 
   return (

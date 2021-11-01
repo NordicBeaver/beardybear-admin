@@ -4,6 +4,8 @@ import styled from 'styled-components/macro';
 import { useCreateBarberServiceMutation } from '../../queries';
 import { ActionButton } from '../common/ActionButton';
 import TextInput from '../common/TextInput';
+import * as Yup from 'yup';
+import { useHistory } from 'react-router-dom';
 
 const InputContainer = styled.div`
   margin-bottom: 1em;
@@ -16,24 +18,36 @@ interface NewBarberServiceFormValues {
 }
 
 export default function NewBarberServiceForm() {
+  const history = useHistory();
+
   const initialValues: NewBarberServiceFormValues = {
     name: '',
     price: '',
     description: '',
   };
 
+  const validationSchema: Yup.SchemaOf<NewBarberServiceFormValues> = Yup.object({
+    name: Yup.string().required('Name cannot be empty'),
+    price: Yup.string()
+      .required('Price cannot be empty')
+      .matches(/^\d+(\.\d+)?$/, 'Price should be a number.'),
+    description: Yup.string().required('Description cannot be empty'),
+  });
+
   const createBarberServiceMutation = useCreateBarberServiceMutation();
 
-  const handleSubmit = (values: NewBarberServiceFormValues) => {
-    createBarberServiceMutation.mutate({
+  const handleSubmit = async (values: NewBarberServiceFormValues) => {
+    await createBarberServiceMutation.mutateAsync({
       name: values.name,
       price: values.price,
       description: values.description,
     });
+
+    history.push('/services');
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
       <Form>
         <InputContainer>
           <TextInput label="Name" name="name"></TextInput>

@@ -1,6 +1,6 @@
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { imageUrl, uploadImage } from '../../api';
 import { barberFromDto } from '../../domain/Barber';
@@ -10,6 +10,7 @@ import { ActionButton } from '../common/ActionButton';
 import FileSelector from '../common/FileSelector';
 import ImagePreview from '../common/ImagePreview';
 import TextInput from '../common/TextInput';
+import * as Yup from 'yup';
 
 const InputContainer = styled.div`
   margin-bottom: 1em;
@@ -38,6 +39,8 @@ export default function UpdateBarberForm() {
   const { id: barberIdString } = useParams<{ id: string }>();
   const barberId = parseInt(barberIdString);
 
+  const history = useHistory();
+
   const auth = useAuth()!;
   const token = auth.token!;
 
@@ -51,6 +54,11 @@ export default function UpdateBarberForm() {
     return <p>Loading...</p>;
   }
 
+  const validationSchema: Yup.SchemaOf<UpdateBarberFormValues> = Yup.object({
+    name: Yup.string().required('Name cannot be empty'),
+    description: Yup.string().required('Description cannot be empty'),
+  });
+
   const barber = barberFromDto(barberQuery.data);
 
   const initialValues: UpdateBarberFormValues = {
@@ -61,16 +69,18 @@ export default function UpdateBarberForm() {
   const handleSubmit = async (values: UpdateBarberFormValues) => {
     const imageFilename = imageFile !== null ? await uploadImage(imageFile, token) : barber.picture;
 
-    updateBarberMutation.mutate({
+    await updateBarberMutation.mutateAsync({
       id: barberId,
       name: values.name,
       description: values.description,
       picture: imageFilename,
     });
+
+    history.push('/barbers');
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
       <Form>
         <InputContainer>
           <TextInput label="Name" name="name"></TextInput>

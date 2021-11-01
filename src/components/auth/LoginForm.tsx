@@ -6,6 +6,7 @@ import { login } from '../../api';
 import { ActionButton } from '../common/ActionButton';
 import TextInput from '../common/TextInput';
 import { useAuth } from './AuthContext';
+import * as Yup from 'yup';
 
 const InputContainer = styled.div`
   margin-bottom: 2em;
@@ -25,6 +26,11 @@ export default function LoginForm() {
     password: '',
   };
 
+  const validationSchema: Yup.SchemaOf<LoginFormValues> = Yup.object({
+    username: Yup.string().required('Username cannot be empty'),
+    password: Yup.string().required('Password cannot be empty'),
+  });
+
   const handleSubmit = async (values: LoginFormValues) => {
     const token = await login({ username: values.username, password: values.password });
     if (token != null) {
@@ -34,7 +40,7 @@ export default function LoginForm() {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
       <Form>
         <InputContainer>
           <TextInput label="Username" name="username"></TextInput>
