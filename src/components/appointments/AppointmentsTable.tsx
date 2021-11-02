@@ -17,6 +17,7 @@ export default function AppointmentsTable() {
     <Table>
       <thead>
         <tr>
+          <th>Client</th>
           <th>Barber</th>
           <th>Service</th>
           <th>Date and Time</th>
@@ -25,6 +26,9 @@ export default function AppointmentsTable() {
       <tbody>
         {appointments.map((appointment) => (
           <tr key={appointment.id}>
+            <td>
+              {appointment.clientName} ({appointment.clientPhoneNumber})
+            </td>
             <td>
               <Link to={`/barbers/${appointment.barber.id}`}>{appointment.barber.name}</Link>
             </td>

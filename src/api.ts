@@ -115,6 +115,8 @@ export interface AppointmentDto {
   barber: BarberDto;
   barberService: BarberServiceDto;
   datetime: string;
+  clientName: string;
+  clientPhoneNumber: string;
 }
 
 export async function getAppointments(token: string) {

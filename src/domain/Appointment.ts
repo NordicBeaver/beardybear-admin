@@ -7,6 +7,8 @@ export interface Appointment {
   barber: Barber;
   barberService: BarberService;
   datetime: Date;
+  clientName: string;
+  clientPhoneNumber: string;
 }
 
 export function appointmentFromDto(dto: AppointmentDto) {
@@ -15,6 +17,8 @@ export function appointmentFromDto(dto: AppointmentDto) {
     barber: barberFromDto(dto.barber),
     barberService: barberServiceFromDto(dto.barberService),
     datetime: new Date(dto.datetime),
+    clientName: dto.clientName,
+    clientPhoneNumber: dto.clientPhoneNumber,
   };
   return appointment;
 }
