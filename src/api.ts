@@ -129,6 +129,8 @@ export interface CreateAppointmentsDto {
   barberId: number;
   barberServiceId: number;
   datetime: string;
+  clientName: string;
+  clientPhoneNumber: string;
 }
 
 export async function createAppointment(dto: CreateAppointmentsDto) {
