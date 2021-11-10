@@ -12,6 +12,12 @@ export function imageUrl(filename: string) {
   return `${host}/images/${filename}`;
 }
 
+export async function anyUsers() {
+  const response = await axios.get<boolean>(`${host}/users/any`);
+  const data = response.data;
+  return data;
+}
+
 export interface UserDto {
   id: number;
   name: string;
@@ -30,6 +36,12 @@ export interface createUserDto {
 
 export async function createUser(dto: createUserDto, token: string) {
   const response = await axios.post<UserDto>(`${host}/users`, dto, { headers: authHeaders(token) });
+  const data = response.data;
+  return data;
+}
+
+export async function createFirstUser(dto: createUserDto) {
+  const response = await axios.post<UserDto>(`${host}/users/create-first`, dto);
   const data = response.data;
   return data;
 }

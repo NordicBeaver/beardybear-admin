@@ -13,6 +13,7 @@ import BarberServicesPage from './components/barberServices/BarberServicesPage';
 import NewBarberServicePage from './components/barberServices/NewBarberServicePage';
 import Header from './components/common/Header';
 import Sidebar from './components/common/Sidebar';
+import FirstUserPage from './components/users/FirstUserPage';
 import NewUserPage from './components/users/NewUserPage';
 import UsersPage from './components/users/UsersPage';
 
@@ -58,6 +59,11 @@ export default function AppContent() {
       </HeaderContainer>
 
       <Switch>
+        <Route path="/first-user">
+          <FullPageContainer>
+            <FirstUserPage></FirstUserPage>
+          </FullPageContainer>
+        </Route>
         <Route path="/login">
           <FullPageContainer>
             <LoginFormPage></LoginFormPage>

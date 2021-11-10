@@ -1,10 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {
+  anyUsers,
   createAppointment,
   createBarber,
   CreateBarberDto,
   createBarberService,
   CreateBarberServiceDto,
+  createFirstUser,
   createUser,
   createUserDto,
   getAppointments,
@@ -20,6 +22,11 @@ import {
 } from './api';
 import { useAuth } from './components/auth/AuthContext';
 
+export function useAnyUsersQuery() {
+  const query = useQuery('anyUsers', anyUsers);
+  return query;
+}
+
 export function useGetUsersQuery() {
   const auth = useAuth()!;
   const token = auth.token!;
@@ -34,6 +41,18 @@ export function useCreateUserMutation() {
   const mutation = useMutation((dto: createUserDto) => createUser(dto, token), {
     onSuccess: () => {
       queryClient.invalidateQueries('users');
+      queryClient.invalidateQueries('anyUsers');
+    },
+  });
+  return mutation;
+}
+
+export function useCreateFirstUserMutation() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation(createFirstUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('users');
+      queryClient.invalidateQueries('anyUsers');
     },
   });
   return mutation;
