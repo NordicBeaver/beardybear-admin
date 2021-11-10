@@ -12,6 +12,17 @@ export function imageUrl(filename: string) {
   return `${host}/images/${filename}`;
 }
 
+export interface UserDto {
+  id: number;
+  name: string;
+}
+
+export async function getUsers(token: string) {
+  const response = await axios.get<UserDto[]>(`${host}/users`, { headers: authHeaders(token) });
+  const data = response.data;
+  return data;
+}
+
 export interface BarberDto {
   id: number;
   name: string;

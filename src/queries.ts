@@ -10,12 +10,20 @@ import {
   getBarbers,
   getBarberService,
   getBarberServices,
+  getUsers,
   updateBarber,
   UpdateBarberDto,
   UpdateBarberSerivceDto,
   updateBarberService,
 } from './api';
 import { useAuth } from './components/auth/AuthContext';
+
+export function useGetUsersQuery() {
+  const auth = useAuth()!;
+  const token = auth.token!;
+  const query = useQuery('users', () => getUsers(token));
+  return query;
+}
 
 export function useGetBarbersQuery() {
   const query = useQuery('barbers', getBarbers);

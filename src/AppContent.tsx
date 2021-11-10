@@ -13,6 +13,7 @@ import BarberServicesPage from './components/barberServices/BarberServicesPage';
 import NewBarberServicePage from './components/barberServices/NewBarberServicePage';
 import Header from './components/common/Header';
 import Sidebar from './components/common/Sidebar';
+import UsersPage from './components/users/UsersPage';
 
 const AppStyled = styled.div`
   min-height: 100vh;
@@ -90,6 +91,9 @@ export default function AppContent() {
               </Route>
               <Route path="/appointments">
                 <AppointmentsPage></AppointmentsPage>
+              </Route>
+              <Route path="/users">
+                <UsersPage></UsersPage>
               </Route>
             </Switch>
           </ContentContainer>
