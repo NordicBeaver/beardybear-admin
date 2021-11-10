@@ -13,6 +13,7 @@ import BarberServicesPage from './components/barberServices/BarberServicesPage';
 import NewBarberServicePage from './components/barberServices/NewBarberServicePage';
 import Header from './components/common/Header';
 import Sidebar from './components/common/Sidebar';
+import NewUserPage from './components/users/NewUserPage';
 import UsersPage from './components/users/UsersPage';
 
 const AppStyled = styled.div`
@@ -91,6 +92,9 @@ export default function AppContent() {
               </Route>
               <Route path="/appointments">
                 <AppointmentsPage></AppointmentsPage>
+              </Route>
+              <Route path="/users/new">
+                <NewUserPage></NewUserPage>
               </Route>
               <Route path="/users">
                 <UsersPage></UsersPage>

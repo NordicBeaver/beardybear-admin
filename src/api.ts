@@ -23,6 +23,17 @@ export async function getUsers(token: string) {
   return data;
 }
 
+export interface createUserDto {
+  name: string;
+  password: string;
+}
+
+export async function createUser(dto: createUserDto, token: string) {
+  const response = await axios.post<UserDto>(`${host}/users`, dto, { headers: authHeaders(token) });
+  const data = response.data;
+  return data;
+}
+
 export interface BarberDto {
   id: number;
   name: string;

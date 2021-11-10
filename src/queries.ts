@@ -5,6 +5,8 @@ import {
   CreateBarberDto,
   createBarberService,
   CreateBarberServiceDto,
+  createUser,
+  createUserDto,
   getAppointments,
   getBarber,
   getBarbers,
@@ -23,6 +25,18 @@ export function useGetUsersQuery() {
   const token = auth.token!;
   const query = useQuery('users', () => getUsers(token));
   return query;
+}
+
+export function useCreateUserMutation() {
+  const queryClient = useQueryClient();
+  const auth = useAuth()!;
+  const token = auth.token!;
+  const mutation = useMutation((dto: createUserDto) => createUser(dto, token), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('users');
+    },
+  });
+  return mutation;
 }
 
 export function useGetBarbersQuery() {
