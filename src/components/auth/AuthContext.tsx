@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 interface AuthContextValues {
   token: string | null;
@@ -11,11 +11,20 @@ const AuthContext = React.createContext<AuthContextValues | undefined>(undefined
 function AuthProvider({ children }: React.PropsWithChildren<{}>) {
   const [token, setToken] = useState<string | null>(null);
 
+  useEffect(() => {
+    const savedToken = localStorage.getItem('AuthToken');
+    if (savedToken != null) {
+      setToken(savedToken);
+    }
+  }, []);
+
   const login = (token: string) => {
+    localStorage.setItem('AuthToken', token);
     setToken(token);
   };
 
   const logout = () => {
+    localStorage.removeItem('AuthToken');
     setToken(null);
   };
 
