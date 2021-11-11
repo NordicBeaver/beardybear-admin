@@ -1,11 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { useCreateUserMutation } from '../../queries';
+import { useCreateUserMutation, useGetUserRolesQuery } from '../../queries';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import TextInput from '../common/TextInput';
 import { ActionButton } from '../common/ActionButton';
 import styled from 'styled-components/macro';
+import Dropdown, { Option } from '../common/Dropdown';
 
 const InputContainer = styled.div`
   margin-bottom: 2em;
@@ -14,27 +15,38 @@ const InputContainer = styled.div`
 interface NewUserFormValues {
   name: string;
   password: string;
+  role: string;
 }
 
 export default function NewUserForm() {
   const createUserMutation = useCreateUserMutation();
 
+  const userRolesQuery = useGetUserRolesQuery();
+
   const history = useHistory();
+
+  if (userRolesQuery.status !== 'success') {
+    return <p>Loading...</p>;
+  }
+  const userRoles = userRolesQuery.data;
 
   const initialValues: NewUserFormValues = {
     name: '',
     password: '',
+    role: userRoles[0],
   };
 
   const validationSchema: Yup.SchemaOf<NewUserFormValues> = Yup.object({
     name: Yup.string().required('Please enter username.'),
     password: Yup.string().required('Please enter password.'),
+    role: Yup.string().required(),
   });
 
   const handleSubmit = async (values: NewUserFormValues) => {
     await createUserMutation.mutateAsync({
       name: values.name,
       password: values.password,
+      role: values.role,
     });
     history.push('/users');
   };
@@ -47,6 +59,13 @@ export default function NewUserForm() {
         </InputContainer>
         <InputContainer>
           <TextInput label="Password" name="password"></TextInput>
+        </InputContainer>
+        <InputContainer>
+          <Dropdown label="Role" name="role">
+            {userRoles.map((role) => (
+              <Option value={role}>{role}</Option>
+            ))}
+          </Dropdown>
         </InputContainer>
         <ActionButton type="submit">New User</ActionButton>
       </Form>

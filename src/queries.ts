@@ -14,6 +14,7 @@ import {
   getBarbers,
   getBarberService,
   getBarberServices,
+  getUserRoles,
   getUsers,
   updateBarber,
   UpdateBarberDto,
@@ -21,6 +22,13 @@ import {
   updateBarberService,
 } from './api';
 import { useAuth } from './components/auth/AuthContext';
+
+export function useGetUserRolesQuery() {
+  const auth = useAuth()!;
+  const token = auth.token!;
+  const query = useQuery('userRoles', () => getUserRoles(token));
+  return query;
+}
 
 export function useAnyUsersQuery() {
   const query = useQuery('anyUsers', anyUsers);

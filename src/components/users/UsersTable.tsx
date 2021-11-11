@@ -18,6 +18,7 @@ export default function UsersTable() {
       <thead>
         <tr>
           <th>Name</th>
+          <th>Role</th>
         </tr>
       </thead>
       <tbody>
@@ -26,6 +27,7 @@ export default function UsersTable() {
             <td>
               <Link to={`/users/${user.id}`}>{user.name}</Link>
             </td>
+            <td>{user.role}</td>
           </tr>
         ))}
       </tbody>
