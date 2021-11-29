@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const host = 'http://localhost:3000';
+const host = process.env.REACT_APP_API_URL ?? 'http://localhost:3000';
 
 function authHeaders(token: string) {
   return {
