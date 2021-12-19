@@ -105,14 +105,19 @@ export default function UpdateBarberForm() {
             </PictureContainer>
             <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>
           </InputContainer>
-          <Button type="submit" variant="action">
-            Update Barber
-          </Button>
+
           {barber.deletedAt === undefined ? (
-            <Button variant="caution" onClick={handleDelete}>
-              Delete Barber
-            </Button>
-          ) : null}
+            <>
+              <Button type="submit" variant="action">
+                Update Barber
+              </Button>
+              <Button variant="caution" onClick={handleDelete}>
+                Delete Barber
+              </Button>
+            </>
+          ) : (
+            <p>Deleted on {barber.deletedAt.toLocaleString()}</p>
+          )}
         </Form>
       </Formik>
     </div>
