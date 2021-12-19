@@ -5,7 +5,7 @@ export interface Barber {
   name: string;
   description: string;
   picture: string | null;
-  deletedAt?: string;
+  deletedAt?: Date;
 }
 
 export function barberFromDto(dto: BarberDto) {
@@ -14,7 +14,7 @@ export function barberFromDto(dto: BarberDto) {
     name: dto.name,
     description: dto.description,
     picture: dto.picture,
-    deletedAt: dto.deletedAt,
+    deletedAt: dto.deletedAt ? new Date(dto.deletedAt) : undefined,
   };
   return barber;
 }
