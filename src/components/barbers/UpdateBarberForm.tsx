@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { imageUrl, uploadImage } from '../../api';
 import { barberFromDto } from '../../domain/Barber';
-import { useGetBarberQuery, useUpdateBarberMutation } from '../../queries';
+import { useDeleteBarberMutation, useGetBarberQuery, useUpdateBarberMutation } from '../../queries';
 import { useAuth } from '../auth/AuthContext';
 import { Button } from '../common/Button';
 import FileSelector from '../common/FileSelector';
@@ -49,6 +49,7 @@ export default function UpdateBarberForm() {
   const barberQuery = useGetBarberQuery(barberId);
 
   const updateBarberMutation = useUpdateBarberMutation();
+  const deleteBarberMutation = useDeleteBarberMutation();
 
   if (barberQuery.status !== 'success') {
     return <p>Loading...</p>;
@@ -79,29 +80,41 @@ export default function UpdateBarberForm() {
     history.push('/barbers');
   };
 
+  const handleDelete = async () => {
+    await deleteBarberMutation.mutateAsync(barber.id);
+    history.push('/barbers');
+  };
+
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-      <Form>
-        <InputContainer>
-          <TextInput label="Name" name="name"></TextInput>
-        </InputContainer>
-        <InputContainer>
-          <TextInput label="Description" name="description"></TextInput>
-        </InputContainer>
-        <InputContainer>
-          <PictureContainer>
-            {imageFile !== null ? (
-              <ImagePreview file={imageFile} width={400} height={400}></ImagePreview>
-            ) : barber.picture != null ? (
-              <Image src={imageUrl(barber.picture)} alt={`${barber.name}`}></Image>
-            ) : null}
-          </PictureContainer>
-          <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>
-        </InputContainer>
-        <Button type="submit" variant="action">
-          Update Barber
-        </Button>
-      </Form>
-    </Formik>
+    <div>
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+        <Form>
+          <InputContainer>
+            <TextInput label="Name" name="name"></TextInput>
+          </InputContainer>
+          <InputContainer>
+            <TextInput label="Description" name="description"></TextInput>
+          </InputContainer>
+          <InputContainer>
+            <PictureContainer>
+              {imageFile !== null ? (
+                <ImagePreview file={imageFile} width={400} height={400}></ImagePreview>
+              ) : barber.picture != null ? (
+                <Image src={imageUrl(barber.picture)} alt={`${barber.name}`}></Image>
+              ) : null}
+            </PictureContainer>
+            <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>
+          </InputContainer>
+          <Button type="submit" variant="action">
+            Update Barber
+          </Button>
+          {barber.deletedAt === undefined ? (
+            <Button variant="caution" onClick={handleDelete}>
+              Delete Barber
+            </Button>
+          ) : null}
+        </Form>
+      </Formik>
+    </div>
   );
 }

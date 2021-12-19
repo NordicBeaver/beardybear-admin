@@ -9,6 +9,7 @@ import {
   createFirstUser,
   createUser,
   createUserDto,
+  deleteBarber,
   getAppointments,
   getBarber,
   getBarbers,
@@ -94,6 +95,19 @@ export function useUpdateBarberMutation() {
   const auth = useAuth()!;
   const token = auth.token!;
   const mutation = useMutation((dto: UpdateBarberDto) => updateBarber(dto, token), {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries('barbers');
+      queryClient.invalidateQueries(['barber', data.id]);
+    },
+  });
+  return mutation;
+}
+
+export function useDeleteBarberMutation() {
+  const queryClient = useQueryClient();
+  const auth = useAuth()!;
+  const token = auth.token!;
+  const mutation = useMutation((barberId: number) => deleteBarber(barberId, token), {
     onSuccess: (data) => {
       queryClient.invalidateQueries('barbers');
       queryClient.invalidateQueries(['barber', data.id]);

@@ -109,6 +109,16 @@ export async function updateBarber(dto: UpdateBarberDto, token: string) {
   return data;
 }
 
+export async function deleteBarber(barberId: number, token: string) {
+  const response = await axios.post<BarberDto>(
+    `${host}/barbers/delete`,
+    { id: barberId },
+    { headers: authHeaders(token) }
+  );
+  const data = response.data;
+  return data;
+}
+
 export interface BarberServiceDto {
   id: number;
   name: string;
