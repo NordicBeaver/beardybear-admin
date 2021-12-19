@@ -14,6 +14,7 @@ import {
   getBarbers,
   getBarberService,
   getBarberServices,
+  GetBarbersRequestParams,
   getUserRoles,
   getUsers,
   updateBarber,
@@ -66,8 +67,8 @@ export function useCreateFirstUserMutation() {
   return mutation;
 }
 
-export function useGetBarbersQuery() {
-  const query = useQuery('barbers', getBarbers);
+export function useGetBarbersQuery(params?: GetBarbersRequestParams) {
+  const query = useQuery(['barbers', params], () => getBarbers(params));
   return query;
 }
 

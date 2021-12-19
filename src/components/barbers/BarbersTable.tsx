@@ -13,8 +13,12 @@ const Image = styled.img`
   margin-right: 1em;
 `;
 
-export default function BarbersTable() {
-  const barbersQuery = useGetBarbersQuery();
+export interface BarbersTableProps {
+  showDeleted?: boolean;
+}
+
+export default function BarbersTable({ showDeleted = false }: BarbersTableProps) {
+  const barbersQuery = useGetBarbersQuery({ includeDeleted: showDeleted });
 
   if (!barbersQuery.isSuccess) {
     return <p>Loading...</p>;

@@ -66,8 +66,13 @@ export interface BarberDto {
   picture: string | null;
 }
 
-export async function getBarbers() {
-  const response = await axios.get<BarberDto[]>(`${host}/barbers`);
+export interface GetBarbersRequestParams {
+  includeDeleted?: boolean;
+}
+
+export async function getBarbers({ includeDeleted = false }: GetBarbersRequestParams = {}) {
+  console.log(includeDeleted);
+  const response = await axios.get<BarberDto[]>(`${host}/barbers`, { params: { includeDeleted: includeDeleted } });
   const data = response.data;
   return data;
 }
