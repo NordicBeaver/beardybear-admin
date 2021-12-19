@@ -4,7 +4,7 @@ import { useCreateUserMutation, useGetUserRolesQuery } from '../../queries';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import TextInput from '../common/TextInput';
-import { ActionButton } from '../common/ActionButton';
+import { Button } from '../common/Button';
 import styled from 'styled-components/macro';
 import Dropdown, { Option } from '../common/Dropdown';
 
@@ -67,7 +67,9 @@ export default function NewUserForm() {
             ))}
           </Dropdown>
         </InputContainer>
-        <ActionButton type="submit">New User</ActionButton>
+        <Button type="submit" variant="action">
+          New User
+        </Button>
       </Form>
     </Formik>
   );

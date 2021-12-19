@@ -6,7 +6,7 @@ import styled from 'styled-components/macro';
 import * as Yup from 'yup';
 import { barberServiceFromDto } from '../../domain/BarberService';
 import { useGetBarberServiceQuery, useUpdateBarberServiceMutation } from '../../queries';
-import { ActionButton } from '../common/ActionButton';
+import { Button } from '../common/Button';
 import TextInput from '../common/TextInput';
 
 const InputContainer = styled.div`
@@ -72,7 +72,9 @@ export default function UpdateBarberServiceForm() {
         <InputContainer>
           <TextInput label="Description" name="description"></TextInput>
         </InputContainer>
-        <ActionButton type="submit">Update Service</ActionButton>
+        <Button type="submit" variant="action">
+          Update Service
+        </Button>
       </Form>
     </Formik>
   );

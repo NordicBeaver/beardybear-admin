@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik';
 import React from 'react';
 import styled from 'styled-components/macro';
 import { useCreateBarberServiceMutation } from '../../queries';
-import { ActionButton } from '../common/ActionButton';
+import { Button } from '../common/Button';
 import TextInput from '../common/TextInput';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
@@ -58,7 +58,9 @@ export default function NewBarberServiceForm() {
         <InputContainer>
           <TextInput label="Description" name="description"></TextInput>
         </InputContainer>
-        <ActionButton type="submit">New Service</ActionButton>
+        <Button type="submit" variant="action">
+          New Service
+        </Button>
       </Form>
     </Formik>
   );

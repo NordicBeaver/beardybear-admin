@@ -4,7 +4,7 @@ import styled from 'styled-components/macro';
 import { uploadImage } from '../../api';
 import { useCreateBarberMutation } from '../../queries';
 import { useAuth } from '../auth/AuthContext';
-import { ActionButton } from '../common/ActionButton';
+import { Button } from '../common/Button';
 import FileSelector from '../common/FileSelector';
 import ImagePreview from '../common/ImagePreview';
 import TextInput from '../common/TextInput';
@@ -76,7 +76,9 @@ export default function NewBarberForm() {
           </PictureContainer>
           <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>
         </InputContainer>
-        <ActionButton type="submit">New Barber</ActionButton>
+        <Button type="submit" variant="action">
+          New Barber
+        </Button>
       </Form>
     </Formik>
   );

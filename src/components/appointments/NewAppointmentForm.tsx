@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik';
 import React from 'react';
 import styled from 'styled-components/macro';
 import { useCreateAppointmentMutation, useGetBarberServicesQuery, useGetBarbersQuery } from '../../queries';
-import { ActionButton } from '../common/ActionButton';
+import { Button } from '../common/Button';
 import DatetimeInput from '../common/DatetimeInput';
 import Dropdown, { Option } from '../common/Dropdown';
 import * as Yup from 'yup';
@@ -91,7 +91,9 @@ export default function NewAppointmentForm() {
         <InputContainer>
           <TextInput label="Client's phone number" name="clientPhoneNumber"></TextInput>
         </InputContainer>
-        <ActionButton type="submit">New Appointment</ActionButton>
+        <Button type="submit" variant="action">
+          New Appointment
+        </Button>
       </Form>
     </Formik>
   );

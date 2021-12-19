@@ -6,7 +6,7 @@ import { imageUrl, uploadImage } from '../../api';
 import { barberFromDto } from '../../domain/Barber';
 import { useGetBarberQuery, useUpdateBarberMutation } from '../../queries';
 import { useAuth } from '../auth/AuthContext';
-import { ActionButton } from '../common/ActionButton';
+import { Button } from '../common/Button';
 import FileSelector from '../common/FileSelector';
 import ImagePreview from '../common/ImagePreview';
 import TextInput from '../common/TextInput';
@@ -98,7 +98,9 @@ export default function UpdateBarberForm() {
           </PictureContainer>
           <FileSelector onSelect={(file) => setImageFile(file)}></FileSelector>
         </InputContainer>
-        <ActionButton type="submit">Update Barber</ActionButton>
+        <Button type="submit" variant="action">
+          Update Barber
+        </Button>
       </Form>
     </Formik>
   );

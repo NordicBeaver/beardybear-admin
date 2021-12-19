@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { login } from '../../api';
-import { ActionButton } from '../common/ActionButton';
+import { Button } from '../common/Button';
 import TextInput from '../common/TextInput';
 import { useAuth } from './AuthContext';
 import * as Yup from 'yup';
@@ -48,7 +48,9 @@ export default function LoginForm() {
         <InputContainer>
           <TextInput label="Password" name="password"></TextInput>
         </InputContainer>
-        <ActionButton type="submit">Login</ActionButton>
+        <Button type="submit" variant="action">
+          Login
+        </Button>
       </Form>
     </Formik>
   );

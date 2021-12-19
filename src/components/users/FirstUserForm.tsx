@@ -4,7 +4,7 @@ import styled from 'styled-components/macro';
 import { useCreateFirstUserMutation } from '../../queries';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
-import { ActionButton } from '../common/ActionButton';
+import { Button } from '../common/Button';
 import TextInput from '../common/TextInput';
 
 const InputContainer = styled.div`
@@ -48,7 +48,9 @@ export default function FirstUserForm() {
         <InputContainer>
           <TextInput label="Password" name="password"></TextInput>
         </InputContainer>
-        <ActionButton type="submit">New User</ActionButton>
+        <Button type="submit" variant="action">
+          New User
+        </Button>
       </Form>
     </Formik>
   );
