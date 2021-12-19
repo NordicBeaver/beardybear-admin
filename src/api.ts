@@ -64,6 +64,7 @@ export interface BarberDto {
   name: string;
   description: string;
   picture: string | null;
+  deletedAt?: string;
 }
 
 export interface GetBarbersRequestParams {

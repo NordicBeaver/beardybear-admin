@@ -40,6 +40,7 @@ export default function BarbersTable({ showDeleted = false }: BarbersTableProps)
           <tr key={barber.id}>
             <td>
               <Link to={`/barbers/${barber.id}`}>{barber.name}</Link>
+              {barber.deletedAt !== undefined ? ' [deleted]' : null}
             </td>
             <td>
               {barber.picture != null ? (

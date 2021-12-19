@@ -5,6 +5,7 @@ export interface Barber {
   name: string;
   description: string;
   picture: string | null;
+  deletedAt?: string;
 }
 
 export function barberFromDto(dto: BarberDto) {
@@ -13,6 +14,7 @@ export function barberFromDto(dto: BarberDto) {
     name: dto.name,
     description: dto.description,
     picture: dto.picture,
+    deletedAt: dto.deletedAt,
   };
   return barber;
 }
