@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ArrowDown, ArrowUp } from 'react-feather';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { GetBarbersRequestParams, imageUrl } from '../../api';
@@ -11,6 +12,10 @@ const Image = styled.img`
   height: 40px;
   object-fit: contain;
   margin-right: 1em;
+`;
+
+const SortableHeader = styled.span`
+  cursor: pointer;
 `;
 
 export interface BarbersTableProps {
@@ -42,9 +47,18 @@ export default function BarbersTable({ showDeleted = false }: BarbersTableProps)
     <Table>
       <thead>
         <tr>
-          <th onClick={() => updateSorting('name')}>Name</th>
+          <th>
+            <SortableHeader onClick={() => updateSorting('name')}>
+              Name {sortField === 'name' ? sortOrder === 'asc' ? <ArrowDown></ArrowDown> : <ArrowUp></ArrowUp> : null}
+            </SortableHeader>
+          </th>
           <th>Picture</th>
-          <th onClick={() => updateSorting('description')}>Description</th>
+          <th onClick={() => updateSorting('description')}>
+            <SortableHeader onClick={() => updateSorting('description')}>
+              Description{' '}
+              {sortField === 'description' ? sortOrder === 'asc' ? <ArrowDown></ArrowDown> : <ArrowUp></ArrowUp> : null}
+            </SortableHeader>
+          </th>
         </tr>
       </thead>
       <tbody>
