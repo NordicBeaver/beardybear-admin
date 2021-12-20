@@ -69,11 +69,12 @@ export interface BarberDto {
 
 export interface GetBarbersRequestParams {
   includeDeleted?: boolean;
+  sortField?: 'name' | 'description';
+  sortOrder?: 'asc' | 'desc';
 }
 
-export async function getBarbers({ includeDeleted = false }: GetBarbersRequestParams = {}) {
-  console.log(includeDeleted);
-  const response = await axios.get<BarberDto[]>(`${host}/barbers`, { params: { includeDeleted: includeDeleted } });
+export async function getBarbers(params: GetBarbersRequestParams = {}) {
+  const response = await axios.get<BarberDto[]>(`${host}/barbers`, { params: params });
   const data = response.data;
   return data;
 }

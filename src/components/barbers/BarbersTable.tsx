@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import { imageUrl } from '../../api';
+import { GetBarbersRequestParams, imageUrl } from '../../api';
 import { barberFromDto } from '../../domain/Barber';
 import { useGetBarbersQuery } from '../../queries';
 import { Table } from '../common/Table';
@@ -18,7 +18,19 @@ export interface BarbersTableProps {
 }
 
 export default function BarbersTable({ showDeleted = false }: BarbersTableProps) {
-  const barbersQuery = useGetBarbersQuery({ includeDeleted: showDeleted });
+  const [sortField, setSortField] = useState<GetBarbersRequestParams['sortField']>('name');
+  const [sortOrder, setSortOrder] = useState<GetBarbersRequestParams['sortOrder']>('asc');
+
+  const updateSorting = (newSortField: GetBarbersRequestParams['sortField']) => {
+    if (newSortField === sortField) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(newSortField);
+      setSortOrder('asc');
+    }
+  };
+
+  const barbersQuery = useGetBarbersQuery({ includeDeleted: showDeleted, sortField: sortField, sortOrder: sortOrder });
 
   if (!barbersQuery.isSuccess) {
     return <p>Loading...</p>;
@@ -30,9 +42,9 @@ export default function BarbersTable({ showDeleted = false }: BarbersTableProps)
     <Table>
       <thead>
         <tr>
-          <th>Name</th>
+          <th onClick={() => updateSorting('name')}>Name</th>
           <th>Picture</th>
-          <th>Description</th>
+          <th onClick={() => updateSorting('description')}>Description</th>
         </tr>
       </thead>
       <tbody>
