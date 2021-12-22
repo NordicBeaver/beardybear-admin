@@ -11,13 +11,16 @@ import {
   createUserDto,
   deleteBarber,
   getAppointments,
+  GetAppointmentsRequestParams,
   getBarber,
   getBarbers,
   getBarberService,
   getBarberServices,
+  GetBarberServicesRequestParams,
   GetBarbersRequestParams,
   getUserRoles,
   getUsers,
+  GetUsersRequestParams,
   updateBarber,
   UpdateBarberDto,
   UpdateBarberSerivceDto,
@@ -37,10 +40,10 @@ export function useAnyUsersQuery() {
   return query;
 }
 
-export function useGetUsersQuery() {
+export function useGetUsersQuery(params: GetUsersRequestParams) {
   const auth = useAuth()!;
   const token = auth.token!;
-  const query = useQuery('users', () => getUsers(token));
+  const query = useQuery(['users', params], () => getUsers(params, token));
   return query;
 }
 
@@ -116,8 +119,8 @@ export function useDeleteBarberMutation() {
   return mutation;
 }
 
-export function useGetBarberServicesQuery() {
-  const query = useQuery('barber-services', getBarberServices);
+export function useGetBarberServicesQuery(params?: GetBarberServicesRequestParams) {
+  const query = useQuery(['barber-services', params], () => getBarberServices(params));
   return query;
 }
 
@@ -151,10 +154,10 @@ export function useUpdateBarberServiceMutation() {
   return mutation;
 }
 
-export function useGetAppointmentsQuery() {
+export function useGetAppointmentsQuery(params: GetAppointmentsRequestParams) {
   const auth = useAuth()!;
   const token = auth.token!;
-  const query = useQuery('appointments', () => getAppointments(token));
+  const query = useQuery(['appointments', params], () => getAppointments(params, token));
   return query;
 }
 

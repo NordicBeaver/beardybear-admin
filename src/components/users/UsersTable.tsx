@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { GetUsersRequestParams } from '../../api';
 import { userFromDto } from '../../domain/User';
 import { useGetUsersQuery } from '../../queries';
 import { Table } from '../common/Table';
+import TableHeader from '../common/TableHeader';
 
 export default function UsersTable() {
-  const usersQuery = useGetUsersQuery();
+  const [sortField, setSortField] = useState<GetUsersRequestParams['sortField']>('name');
+  const [sortOrder, setSortOrder] = useState<GetUsersRequestParams['sortOrder']>('asc');
+
+  const updateSorting = (newSortField: GetUsersRequestParams['sortField']) => {
+    if (newSortField === sortField) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(newSortField);
+      setSortOrder('asc');
+    }
+  };
+
+  const usersQuery = useGetUsersQuery({ sortField: sortField, sortOrder: sortOrder });
 
   if (usersQuery.status !== 'success') {
     return <p>Loading...</p>;
@@ -17,8 +31,20 @@ export default function UsersTable() {
     <Table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Role</th>
+          <TableHeader
+            sortable={true}
+            sortOrder={sortField === 'name' ? sortOrder : undefined}
+            onClick={() => updateSorting('name')}
+          >
+            Name
+          </TableHeader>
+          <TableHeader
+            sortable={true}
+            sortOrder={sortField === 'role' ? sortOrder : undefined}
+            onClick={() => updateSorting('role')}
+          >
+            Role
+          </TableHeader>
         </tr>
       </thead>
       <tbody>

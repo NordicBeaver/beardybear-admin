@@ -30,8 +30,13 @@ export interface UserDto {
   role: string;
 }
 
-export async function getUsers(token: string) {
-  const response = await axios.get<UserDto[]>(`${host}/users`, { headers: authHeaders(token) });
+export interface GetUsersRequestParams {
+  sortField?: 'name' | 'role';
+  sortOrder?: 'asc' | 'desc';
+}
+
+export async function getUsers(params: GetUsersRequestParams = {}, token: string) {
+  const response = await axios.get<UserDto[]>(`${host}/users`, { headers: authHeaders(token), params: params });
   const data = response.data;
   return data;
 }
@@ -127,8 +132,13 @@ export interface BarberServiceDto {
   description: string;
 }
 
-export async function getBarberServices() {
-  const response = await axios.get<BarberServiceDto[]>(`${host}/barber-services`);
+export interface GetBarberServicesRequestParams {
+  sortField?: 'name' | 'price' | 'description';
+  sortOrder?: 'asc' | 'desc';
+}
+
+export async function getBarberServices(params: GetBarberServicesRequestParams = {}) {
+  const response = await axios.get<BarberServiceDto[]>(`${host}/barber-services`, { params: params });
   const data = response.data;
   return data;
 }
@@ -183,8 +193,16 @@ export interface AppointmentDto {
   clientPhoneNumber: string;
 }
 
-export async function getAppointments(token: string) {
-  const response = await axios.get<AppointmentDto[]>(`${host}/appointments`, { headers: authHeaders(token) });
+export interface GetAppointmentsRequestParams {
+  sortField?: 'barber' | 'service' | 'datetime';
+  sortOrder?: 'asc' | 'desc';
+}
+
+export async function getAppointments(params: GetAppointmentsRequestParams = {}, token: string) {
+  const response = await axios.get<AppointmentDto[]>(`${host}/appointments`, {
+    headers: authHeaders(token),
+    params: params,
+  });
   const data = response.data;
   return data;
 }

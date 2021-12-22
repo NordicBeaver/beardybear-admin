@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { GetAppointmentsRequestParams } from '../../api';
 import { appointmentFromDto } from '../../domain/Appointment';
 import { useGetAppointmentsQuery } from '../../queries';
 import { Table } from '../common/Table';
+import TableHeader from '../common/TableHeader';
 
 export default function AppointmentsTable() {
-  const appointmentsQuery = useGetAppointmentsQuery();
+  const [sortField, setSortField] = useState<GetAppointmentsRequestParams['sortField']>('datetime');
+  const [sortOrder, setSortOrder] = useState<GetAppointmentsRequestParams['sortOrder']>('desc');
+
+  const updateSorting = (newSortField: GetAppointmentsRequestParams['sortField']) => {
+    if (newSortField === sortField) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(newSortField);
+      setSortOrder('asc');
+    }
+  };
+
+  const appointmentsQuery = useGetAppointmentsQuery({ sortField: sortField, sortOrder: sortOrder });
 
   if (appointmentsQuery.status !== 'success') {
     return <p>Loading...</p>;
@@ -17,10 +31,28 @@ export default function AppointmentsTable() {
     <Table>
       <thead>
         <tr>
-          <th>Client</th>
-          <th>Barber</th>
-          <th>Service</th>
-          <th>Date and Time</th>
+          <TableHeader>Client</TableHeader>
+          <TableHeader
+            sortable={true}
+            sortOrder={sortField === 'barber' ? sortOrder : undefined}
+            onClick={() => updateSorting('barber')}
+          >
+            Barber
+          </TableHeader>
+          <TableHeader
+            sortable={true}
+            sortOrder={sortField === 'service' ? sortOrder : undefined}
+            onClick={() => updateSorting('service')}
+          >
+            Service
+          </TableHeader>
+          <TableHeader
+            sortable={true}
+            sortOrder={sortField === 'datetime' ? sortOrder : undefined}
+            onClick={() => updateSorting('datetime')}
+          >
+            Date and Time
+          </TableHeader>
         </tr>
       </thead>
       <tbody>
