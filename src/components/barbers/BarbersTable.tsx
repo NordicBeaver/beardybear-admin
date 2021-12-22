@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { GetBarbersRequestParams, imageUrl } from '../../api';
 import { barberFromDto } from '../../domain/Barber';
+import { useSortField } from '../../hooks/useSortField';
 import { useGetBarbersQuery } from '../../queries';
 import { Table } from '../common/Table';
 import TableHeader from '../common/TableHeader';
@@ -19,17 +20,7 @@ export interface BarbersTableProps {
 }
 
 export default function BarbersTable({ showDeleted = false }: BarbersTableProps) {
-  const [sortField, setSortField] = useState<GetBarbersRequestParams['sortField']>('name');
-  const [sortOrder, setSortOrder] = useState<GetBarbersRequestParams['sortOrder']>('asc');
-
-  const updateSorting = (newSortField: GetBarbersRequestParams['sortField']) => {
-    if (newSortField === sortField) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(newSortField);
-      setSortOrder('asc');
-    }
-  };
+  const { sortField, sortOrder, updateSorting } = useSortField<GetBarbersRequestParams['sortField']>('name');
 
   const barbersQuery = useGetBarbersQuery({ includeDeleted: showDeleted, sortField: sortField, sortOrder: sortOrder });
 

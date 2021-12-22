@@ -1,23 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { GetBarberServicesRequestParams } from '../../api';
 import { barberServiceFromDto } from '../../domain/BarberService';
+import { useSortField } from '../../hooks/useSortField';
 import { useGetBarberServicesQuery } from '../../queries';
 import { Table } from '../common/Table';
 import TableHeader from '../common/TableHeader';
 
 export default function BarberServicesTable() {
-  const [sortField, setSortField] = useState<GetBarberServicesRequestParams['sortField']>('name');
-  const [sortOrder, setSortOrder] = useState<GetBarberServicesRequestParams['sortOrder']>('asc');
-
-  const updateSorting = (newSortField: GetBarberServicesRequestParams['sortField']) => {
-    if (newSortField === sortField) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(newSortField);
-      setSortOrder('asc');
-    }
-  };
+  const { sortField, sortOrder, updateSorting } = useSortField<GetBarberServicesRequestParams['sortField']>('name');
 
   const barberServicesQuery = useGetBarberServicesQuery({ sortField: sortField, sortOrder: sortOrder });
 

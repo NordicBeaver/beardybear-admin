@@ -1,23 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { GetUsersRequestParams } from '../../api';
 import { userFromDto } from '../../domain/User';
+import { useSortField } from '../../hooks/useSortField';
 import { useGetUsersQuery } from '../../queries';
 import { Table } from '../common/Table';
 import TableHeader from '../common/TableHeader';
 
 export default function UsersTable() {
-  const [sortField, setSortField] = useState<GetUsersRequestParams['sortField']>('name');
-  const [sortOrder, setSortOrder] = useState<GetUsersRequestParams['sortOrder']>('asc');
-
-  const updateSorting = (newSortField: GetUsersRequestParams['sortField']) => {
-    if (newSortField === sortField) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(newSortField);
-      setSortOrder('asc');
-    }
-  };
+  const { sortField, sortOrder, updateSorting } = useSortField<GetUsersRequestParams['sortField']>('name');
 
   const usersQuery = useGetUsersQuery({ sortField: sortField, sortOrder: sortOrder });
 

@@ -1,23 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { GetAppointmentsRequestParams } from '../../api';
 import { appointmentFromDto } from '../../domain/Appointment';
+import { useSortField } from '../../hooks/useSortField';
 import { useGetAppointmentsQuery } from '../../queries';
 import { Table } from '../common/Table';
 import TableHeader from '../common/TableHeader';
 
 export default function AppointmentsTable() {
-  const [sortField, setSortField] = useState<GetAppointmentsRequestParams['sortField']>('datetime');
-  const [sortOrder, setSortOrder] = useState<GetAppointmentsRequestParams['sortOrder']>('desc');
-
-  const updateSorting = (newSortField: GetAppointmentsRequestParams['sortField']) => {
-    if (newSortField === sortField) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(newSortField);
-      setSortOrder('asc');
-    }
-  };
+  const { sortField, sortOrder, updateSorting } = useSortField<GetAppointmentsRequestParams['sortField']>(
+    'datetime',
+    'desc'
+  );
 
   const appointmentsQuery = useGetAppointmentsQuery({ sortField: sortField, sortOrder: sortOrder });
 
