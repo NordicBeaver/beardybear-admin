@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
-import { ArrowDown, ArrowUp } from 'react-feather';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { GetBarbersRequestParams, imageUrl } from '../../api';
 import { barberFromDto } from '../../domain/Barber';
 import { useGetBarbersQuery } from '../../queries';
 import { Table } from '../common/Table';
+import TableHeader from '../common/TableHeader';
 
 const Image = styled.img`
   width: 40px;
   height: 40px;
   object-fit: contain;
   margin-right: 1em;
-`;
-
-const SortableHeader = styled.span`
-  cursor: pointer;
 `;
 
 export interface BarbersTableProps {
@@ -47,18 +43,21 @@ export default function BarbersTable({ showDeleted = false }: BarbersTableProps)
     <Table>
       <thead>
         <tr>
-          <th>
-            <SortableHeader onClick={() => updateSorting('name')}>
-              Name {sortField === 'name' ? sortOrder === 'asc' ? <ArrowDown></ArrowDown> : <ArrowUp></ArrowUp> : null}
-            </SortableHeader>
-          </th>
-          <th>Picture</th>
-          <th onClick={() => updateSorting('description')}>
-            <SortableHeader onClick={() => updateSorting('description')}>
-              Description{' '}
-              {sortField === 'description' ? sortOrder === 'asc' ? <ArrowDown></ArrowDown> : <ArrowUp></ArrowUp> : null}
-            </SortableHeader>
-          </th>
+          <TableHeader
+            sortable={true}
+            sortOrder={sortField === 'name' ? sortOrder : undefined}
+            onClick={() => updateSorting('name')}
+          >
+            Name
+          </TableHeader>
+          <TableHeader>Picture</TableHeader>
+          <TableHeader
+            sortable={true}
+            sortOrder={sortField === 'description' ? sortOrder : undefined}
+            onClick={() => updateSorting('description')}
+          >
+            Description
+          </TableHeader>
         </tr>
       </thead>
       <tbody>
