@@ -11,6 +11,7 @@ import {
   createUserDto,
   deleteBarber,
   getAppointments,
+  getAppointmentsCount,
   GetAppointmentsRequestParams,
   getBarber,
   getBarbers,
@@ -158,6 +159,13 @@ export function useGetAppointmentsQuery(params: GetAppointmentsRequestParams) {
   const auth = useAuth()!;
   const token = auth.token!;
   const query = useQuery(['appointments', params], () => getAppointments(params, token));
+  return query;
+}
+
+export function useGetAppointmentsCountQuery() {
+  const auth = useAuth()!;
+  const token = auth.token!;
+  const query = useQuery(['appointmentsCount'], () => getAppointmentsCount(token));
   return query;
 }
 

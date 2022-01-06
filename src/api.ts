@@ -196,6 +196,8 @@ export interface AppointmentDto {
 export interface GetAppointmentsRequestParams {
   sortField?: 'barber' | 'service' | 'datetime';
   sortOrder?: 'asc' | 'desc';
+  limit?: number;
+  offset?: number;
 }
 
 export async function getAppointments(params: GetAppointmentsRequestParams = {}, token: string) {
@@ -205,6 +207,12 @@ export async function getAppointments(params: GetAppointmentsRequestParams = {},
   });
   const data = response.data;
   return data;
+}
+
+export async function getAppointmentsCount(token: string) {
+  const response = await axios.get<{ count: number }>(`${host}/appointments/count`, { headers: authHeaders(token) });
+  const data = response.data;
+  return data.count;
 }
 
 export interface CreateAppointmentsDto {

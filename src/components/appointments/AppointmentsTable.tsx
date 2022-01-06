@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import { GetAppointmentsRequestParams } from '../../api';
 import { appointmentFromDto } from '../../domain/Appointment';
 import { useSortField } from '../../hooks/useSortField';
-import { useGetAppointmentsQuery } from '../../queries';
+import { useGetAppointmentsCountQuery, useGetAppointmentsQuery } from '../../queries';
 import Pagination from '../common/Pagination';
 import { Table } from '../common/Table';
 import TableHeader from '../common/TableHeader';
+
+const PAGE_SIZE = 10;
 
 export default function AppointmentsTable() {
   const { sortField, sortOrder, updateSorting } = useSortField<GetAppointmentsRequestParams['sortField']>(
@@ -16,17 +18,24 @@ export default function AppointmentsTable() {
 
   const [page, setPage] = useState(1);
 
-  const appointmentsQuery = useGetAppointmentsQuery({ sortField: sortField, sortOrder: sortOrder });
+  const appointmentsQuery = useGetAppointmentsQuery({
+    sortField: sortField,
+    sortOrder: sortOrder,
+    offset: (page - 1) * PAGE_SIZE,
+    limit: PAGE_SIZE,
+  });
+  const appointmentsCountQuery = useGetAppointmentsCountQuery();
 
-  if (appointmentsQuery.status !== 'success') {
+  if (appointmentsQuery.status !== 'success' || appointmentsCountQuery.status !== 'success') {
     return <p>Loading...</p>;
   }
+
+  const pagesCount = Math.ceil(appointmentsCountQuery.data / PAGE_SIZE);
 
   const appointments = appointmentsQuery.data.map(appointmentFromDto);
 
   return (
     <div>
-      <Pagination pagesCount={50} currentPage={page} onPageChange={(newPage) => setPage(newPage)}></Pagination>
       <Table>
         <thead>
           <tr>
@@ -71,6 +80,7 @@ export default function AppointmentsTable() {
           ))}
         </tbody>
       </Table>
+      <Pagination pagesCount={pagesCount} currentPage={page} onPageChange={(newPage) => setPage(newPage)}></Pagination>
     </div>
   );
 }
