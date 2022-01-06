@@ -1,4 +1,20 @@
 import React from 'react';
+import styled from 'styled-components/macro';
+
+const PaginationList = styled.ul`
+  display: flex;
+  gap: 1em;
+`;
+
+const PageButtonStyled = styled.button<{ isActive: boolean }>`
+  background-color: ${(props) => (props.isActive ? '#ffffff' : 'transparent')};
+  color: ${(props) => (props.isActive ? '#141414' : '#ffffff')};
+  border: 1px solid #ffffff;
+  min-width: 2em;
+  min-height: 2em;
+  cursor: ${(props) => (props.isActive ? 'default' : 'pointer')};
+  font-size: 1em;
+`;
 
 function PageSkip() {
   return <li>...</li>;
@@ -13,7 +29,9 @@ export default function Pagination({ pagesCount, currentPage, onPageChange }: Pa
   function PageButton(pagenum: number) {
     return (
       <li>
-        <button onClick={() => onPageChange?.(pagenum)}>{pagenum}</button>
+        <PageButtonStyled isActive={pagenum === currentPage} onClick={() => onPageChange?.(pagenum)}>
+          {pagenum}
+        </PageButtonStyled>
       </li>
     );
   }
@@ -25,7 +43,7 @@ export default function Pagination({ pagesCount, currentPage, onPageChange }: Pa
       pages.push(PageButton(i));
     }
   } else {
-    pages.push(PageButton(0));
+    pages.push(PageButton(1));
     pages.push(PageSkip());
     pages.push(PageButton(currentPage - 1));
   }
@@ -42,5 +60,5 @@ export default function Pagination({ pagesCount, currentPage, onPageChange }: Pa
     pages.push(PageButton(pagesCount));
   }
 
-  return <ul>{pages}</ul>;
+  return <PaginationList>{pages}</PaginationList>;
 }
