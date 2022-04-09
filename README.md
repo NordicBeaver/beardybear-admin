@@ -1,3 +1,11 @@
+# Description 
+
+Front-end for the admin panel for the BeardyBear project.
+
+Live version: https://beardybear.nordicbeaver.io/
+
+For more details: https://www.youtube.com/watch?v=b_QDY1UIT7Y&list=PL7b0cPjh8z6K_4qLNu_QdE3RpiU6omViC
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
